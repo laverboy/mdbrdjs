@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Mdbrd Search</title>
+		<link rel="stylesheet" href="css/style.css">
+	</head>
+	<body>
+
+		<div id="contents"></div>
+	
+
+		<!-- Templates -->
+		<script type="text/template" id="start">
+			<h1>Welcome to Mdbrd</h1>
+			<p><a href='#/search'>Let&#39;s get started</a></p>
+		</script>
+		<script type="text/template" id="search-template">
+			<div id="searchView">
+			<h1>Start your Search</h1>
+
+			<form method="post" action="" id="search" name="mdbrdSearch" onsubmit="return false">
+				<input id="entrybox" type="text" name="search" value="" placeholder="Search&hellip;">	
+			</form>
+
+			<ul id="results"></ul>
+
+			<ul id="mdbrd"></ul>
+			</div>
+		</script>
+		<script type="text/template" id="shot-template">
+			<a href="http://dribbble.com<%= link %>" data-id="<%= id %>" target="_blank" >
+				<img src="http://dribbble.com<%= url %>" alt="">
+			</a>
+		</script>
+
+		<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7/jquery.min.js"></script>
+		<script src="http://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.2.2/underscore-min.js"></script>
+		<script src="http://cdnjs.cloudflare.com/ajax/libs/backbone.js/0.5.3/backbone-min.js"></script>
+		<script src="app.js"></script>
+		<script src="shots.js"></script>
+		<script src="searchview.js"></script>
+		<script src="mdbrd.js"></script>
+		<script>
+			(function ($) {
+				
+				app = new App;
+				Backbone.history.start();
+
+			})(jQuery);
+
+			// What's Needed
+			// - more/pagination button
+			// - 0 results response
+			// -flickr search?
+
+			
+
+			
+		</script>
+	</body>
+
+	
+</html>

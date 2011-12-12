@@ -1,0 +1,40 @@
+@import url('reset.css');
+body{
+	width: 75%;
+	margin: 0 auto;
+	font-size:16px;
+}
+h1 {
+	font-family: "Helvetica", sans-serif;
+	font-size:2em;
+	text-align: center;
+	margin-top: 40px;
+}
+form#search {
+	margin: 30px auto 0;
+	width: 350px;
+	text-align: center;
+}
+form#search.loading {
+	background: url(loading.gif) no-repeat right center;
+}
+#search input {
+	font-size:1.5em;
+	width:300px;
+}
+#results {
+	margin-top: 30px;
+	border-top: 1px solid #333;
+	border-left: 1px solid #333;
+}
+.shot {
+	width:200px; height:150px;
+	float:left;
+	list-style: none;
+
+	border-color: #333;
+	border-style: solid;
+	border-right-width: 1px;
+	border-bottom-width: 1px;
+
+}

@@ -1,0 +1,376 @@
+{
+	"auto_complete":
+	{
+		"selected_items":
+		[
+			[
+				"return",
+				"return  (keyword)"
+			],
+			[
+				"input",
+				"input: input - text"
+			],
+			[
+				"AppView",
+				"AppView  (variable)"
+			],
+			[
+				"content",
+				"contents  (variable)"
+			],
+			[
+				"Backbone",
+				"Backbone  (variable)"
+			],
+			[
+				"new",
+				"new  (keyword)"
+			],
+			[
+				"clear",
+				"clear:   (property)"
+			],
+			[
+				"Con",
+				"sync  (function)"
+			],
+			[
+				"s",
+				"font-size"
+			],
+			[
+				"font",
+				"font: font-family: family"
+			],
+			[
+				"form",
+				"form: <form>"
+			],
+			[
+				"si",
+				"font-size"
+			],
+			[
+				"impor",
+				"import  (rule)"
+			],
+			[
+				"list",
+				"list: list-style-position: pos"
+			],
+			[
+				"heigh",
+				"height"
+			],
+			[
+				"a",
+				"auto  (value)"
+			],
+			[
+				"body",
+				"body: <body>"
+			],
+			[
+				"link",
+				"link: link - stylesheet"
+			],
+			[
+				"url",
+				"url  (variable)"
+			],
+			[
+				"displ",
+				"display:   (property)"
+			],
+			[
+				"display",
+				"display:   (property)"
+			],
+			[
+				"html",
+				"html: html"
+			],
+			[
+				"Backbon",
+				"Backbone  (variable)"
+			],
+			[
+				"aside",
+				"aside  (element)"
+			],
+			[
+				"this",
+				"this  (keyword)"
+			],
+			[
+				"V",
+				"AppView  (variable)"
+			],
+			[
+				"src",
+				"src  (variable)"
+			],
+			[
+				"var",
+				"var  (keyword)"
+			],
+			[
+				"fun",
+				"fun: function …"
+			],
+			[
+				"php",
+				"phpcredits"
+			],
+			[
+				"re",
+				"response"
+			],
+			[
+				"functi",
+				"function"
+			]
+		]
+	},
+	"buffers":
+	[
+		{
+			"file": "index.html",
+			"settings":
+			{
+				"buffer_size": 4435,
+				"line_ending": "Unix"
+			}
+		}
+	],
+	"build_system": "",
+	"command_palette":
+	{
+		"height": 112.0,
+		"selected_items":
+		[
+			[
+				"insta",
+				"Package Control: Install Package"
+			],
+			[
+				"",
+				"HTML: Encode Special Characters"
+			],
+			[
+				"sni",
+				"Snippet: PHP Starter"
+			],
+			[
+				"ph",
+				"Snippet: phpquestionmark"
+			],
+			[
+				"Package Control: ins",
+				"Package Control: Install Package"
+			],
+			[
+				"snippet php",
+				"Snippet: <?php … ?>"
+			],
+			[
+				"ins",
+				"Package Control: Install Package"
+			],
+			[
+				"install",
+				"Package Control: Install Package"
+			],
+			[
+				"pac",
+				"Package Control: Install Package"
+			],
+			[
+				"PAc",
+				"Package Control: Install Package"
+			]
+		],
+		"width": 579.0
+	},
+	"console":
+	{
+		"height": 115.0
+	},
+	"distraction_free":
+	{
+		"menu_visible": true,
+		"show_minimap": false,
+		"show_open_files": false,
+		"show_tabs": false,
+		"side_bar_visible": false,
+		"status_bar_visible": false
+	},
+	"file_history":
+	[
+		"/Users/mattl/Dropbox/Message Sites/Test Area/backbone/index.html",
+		"/Users/mattl/Dropbox/Message Sites/Test Area/backbone/mdbrd.js",
+		"/Users/mattl/Library/Application Support/Sublime Text 2/Packages/Alignment/Default (OSX).sublime-keymap",
+		"/Users/mattl/Library/Application Support/Sublime Text 2/Packages/User/HTML.sublime-settings",
+		"/Users/mattl/Library/Application Support/Sublime Text 2/Packages/User/Default (OSX).sublime-keymap",
+		"/Users/mattl/Dropbox/Message Sites/Test Area/backbone/css/reset.css",
+		"/Users/mattl/Dropbox/Message Sites/Test Area/backbone/mdbrd",
+		"/Users/mattl/Dropbox/Message Sites/lifecentre/sftp-settings.json",
+		"/Users/mattl/Downloads/demo2/backbone-localstorage.js",
+		"/Users/mattl/Downloads/hummingbird/server.js",
+		"/Users/mattl/.bashrc",
+		"/Users/mattl/Dropbox/Message Sites/eden/wp-content/themes/eden/aboutformat.php",
+		"/Users/mattl/Library/Application Support/Sublime Text 2/Packages/User/phpquestionmark.sublime-snippet",
+		"/Users/mattl/Dropbox/Message Sites/eden/wp-content/themes/eden/posterous.php",
+		"/Users/mattl/Dropbox/Message Sites/eden/wp-content/themes/eden/beingpage.php",
+		"/Users/mattl/Dropbox/Message Sites/eden/wp-content/themes/eden/archive.php",
+		"/Users/mattl/Dropbox/Message Sites/eden/wp-content/themes/eden/home.php",
+		"/Users/mattl/Dropbox/Message Sites/eden/wp-content/themes/eden/sftp-settings.json",
+		"/Users/mattl/Library/Application Support/Sublime Text 2/Packages/SFTP/SFTP.sublime-settings",
+		"/Users/mattl/Dropbox/Message Sites/eden/wp-content/themes/eden/functions.php",
+		"/Users/mattl/Desktop/test.php",
+		"/Users/mattl/Dropbox/Message Sites/eden/wp-content/themes/eden/timthumb.php",
+		"/Users/mattl/Dropbox/Message Sites/eden/wp-content/themes/eden/media.php",
+		"/Users/mattl/Library/Application Support/Sublime Text 2/Packages/User/Global.sublime-settings",
+		"/Users/mattl/Library/Application Support/Sublime Text 2/Packages/User/Package Control.sublime-settings"
+	],
+	"find":
+	{
+		"height": 33.0
+	},
+	"find_in_files":
+	{
+		"height": 0.0,
+		"where_history":
+		[
+		]
+	},
+	"find_state":
+	{
+		"case_sensitive": false,
+		"find_history":
+		[
+			"player",
+			"console",
+			"&gt;",
+			"&lt;",
+			"$lt;",
+			"&nbsp;",
+			"frei"
+		],
+		"highlight": true,
+		"in_selection": false,
+		"preserve_case": false,
+		"regex": false,
+		"replace_history":
+		[
+		],
+		"reverse": false,
+		"show_context": true,
+		"use_buffer2": true,
+		"whole_word": false,
+		"wrap": true
+	},
+	"groups":
+	[
+		{
+			"selected": 0,
+			"sheets":
+			[
+				{
+					"buffer": 0,
+					"file": "index.html",
+					"settings":
+					{
+						"buffer_size": 4435,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								0,
+								0
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/HTML/HTML.tmLanguage",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				}
+			]
+		}
+	],
+	"incremental_find":
+	{
+		"height": 0.0
+	},
+	"input":
+	{
+		"height": 29.0
+	},
+	"layout":
+	{
+		"cells":
+		[
+			[
+				0,
+				0,
+				1,
+				1
+			]
+		],
+		"cols":
+		[
+			0.0,
+			1.0
+		],
+		"rows":
+		[
+			0.0,
+			1.0
+		]
+	},
+	"menu_visible": true,
+	"output.sftp":
+	{
+		"height": 92.0
+	},
+	"replace":
+	{
+		"height": 62.0
+	},
+	"save_all_on_build": true,
+	"select_file":
+	{
+		"height": 0.0,
+		"selected_items":
+		[
+			[
+				"fun",
+				"functions.php"
+			]
+		],
+		"width": 0.0
+	},
+	"select_project":
+	{
+		"height": 500.0,
+		"selected_items":
+		[
+		],
+		"width": 380.0
+	},
+	"show_minimap": false,
+	"show_open_files": false,
+	"show_tabs": true,
+	"side_bar_visible": true,
+	"side_bar_width": 150.0,
+	"status_bar_visible": true
+}
