@@ -139,7 +139,26 @@
 			"file": "index.html",
 			"settings":
 			{
-				"buffer_size": 4435,
+				"buffer_size": 1571,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"contents": "Shot = Backbone.Model.extend({});\nShotList = Backbone.Collection.extend({\n	model: Shot,\n	parse: function(response){\n		if(response.query.count > 0){\n			return response.query.results.a;	\n		}else{\n			console.log(\"No results\");\n			console.log(response);\n		}\n		\n	},\n	url: function() {\n		var searchRoot = \"http://query.yahooapis.com/v1/public/yql?q=\";\n		var searchUrl = \"select * from html where url='http://dribbble.com/search?page=1&q=\";\n		searchUrl += this.search;\n		searchUrl += \"' and xpath='//div[@class=\\\"dribbble-img\\\"]/a[1]'\";\n		searchEnd = \"&format=json&callback\";\n		//console.log(searchRoot + encodeURIComponent(searchUrl) + searchEnd);\n\n		return searchRoot + encodeURIComponent(searchUrl) + searchEnd;\n		//return \"http://api.dribbble.com/players/\" + encodeURIComponent(this.search) +\"/shots?per_page=18\";\n	}\n}); \nwindow.ShotListView = Backbone.View.extend({\n	tagName: \"ul\",\n	initialize: function(){\n		_.bindAll(this, 'renderShot')\n	},\n	renderShot: function(model){\n		var shotview = new ShotView({model: model});\n		shotView.render();\n		$(this.el).append(itemView.el);\n	},\n	render: function(){\n		this.collection.each(this.renderShot);\n	}\n\n});\n\nwindow.ShotView = Backbone.View.extend({\n	\n	tagName: 'li',\n	className: 'shot',\n	template: _.template($('#shot-template').html()),\n	events: {\n		\"click a\" : \"clicked\"\n	},\n\n	render: function(){\n		var img = this.model.get(\"img\"),\n		html = this.template({\n			id: this.id,\n			url: img['src'],\n			link: this.model.get(\"href\")\n		});\n\n		$(this.el).append(html);\n	},\n	clicked: function(e) {\n		e.preventDefault();\n		console.log(e.currentTarget);\n	}\n\n});",
+			"file": "shots.js",
+			"file_size": 1590,
+			"file_write_time": 1323765127000000,
+			"settings":
+			{
+				"buffer_size": 1590,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "searchview.js",
+			"settings":
+			{
+				"buffer_size": 1193,
 				"line_ending": "Unix"
 			}
 		}
@@ -208,6 +227,7 @@
 	},
 	"file_history":
 	[
+		"/Users/mattl/Dropbox/Message Sites/Test Area/mdbrdjs/mdbrd.sublime-workspace",
 		"/Users/mattl/Dropbox/Message Sites/Test Area/backbone/index.html",
 		"/Users/mattl/Dropbox/Message Sites/Test Area/backbone/mdbrd.js",
 		"/Users/mattl/Library/Application Support/Sublime Text 2/Packages/Alignment/Default (OSX).sublime-keymap",
@@ -274,7 +294,7 @@
 	"groups":
 	[
 		{
-			"selected": 0,
+			"selected": 1,
 			"sheets":
 			[
 				{
@@ -282,7 +302,7 @@
 					"file": "index.html",
 					"settings":
 					{
-						"buffer_size": 4435,
+						"buffer_size": 1571,
 						"regions":
 						{
 						},
@@ -296,6 +316,60 @@
 						"settings":
 						{
 							"syntax": "Packages/HTML/HTML.tmLanguage",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 1,
+					"file": "shots.js",
+					"settings":
+					{
+						"buffer_size": 1590,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								571,
+								571
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/JavaScript/JavaScript.tmLanguage",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 2,
+					"file": "searchview.js",
+					"settings":
+					{
+						"buffer_size": 1193,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								385,
+								385
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/JavaScript/JavaScript.tmLanguage",
 							"translate_tabs_to_spaces": false
 						},
 						"translation.x": 0.0,
