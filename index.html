@@ -7,43 +7,68 @@
 	<body>
 
 		<div id="contents"></div>
+		<div id="footer"></div>
 	
 
 		<!-- Templates -->
 		<script type="text/template" id="start">
 			<h1>Welcome to Mdbrd</h1>
-			<p><a href='#/search'>Let&#39;s get started</a></p>
+			<p style="text-align:center;"><a href='#/search'>Let&#39;s get started</a></p>
 		</script>
 		<script type="text/template" id="search-template">
 			<div id="searchView">
-			<h1>Start your Search</h1>
-
-			<form method="post" action="" id="search" name="mdbrdSearch" onsubmit="return false">
-				<input id="entrybox" type="text" name="search" value="" placeholder="Search&hellip;">	
-			</form>
-
-			<ul id="results"></ul>
-
-			<ul id="mdbrd"></ul>
+				<h1>Start your Search</h1>
+	
+				<form method="post" action="" id="search" name="mdbrdSearch" onsubmit="return false">
+					<input id="entrybox" type="text" name="search" value="" placeholder="Search&hellip;">	
+				</form>
+				<ul id="results"></ul>	
+	
+				<ul id="mdbrd"></ul>
+				
+				<p id="showMdbrd" style="display:none;text-align:right;"><span id="count"></span> counts selected  <a class="button" href="#/mdbrd">Save</a></p>
 			</div>
 		</script>
 		<script type="text/template" id="shot-template">
 			<a href="http://dribbble.com<%= link %>" data-id="<%= id %>" target="_blank" >
-				<img src="http://dribbble.com<%= url %>" alt="">
+				<img src="http://dribbble.com<%= url %>" alt="<%= alt %>">
+				<span></span>
+			</a>
+		</script>
+		<script type="text/template" id="mdbrdshot-template">
+			<a href="http://dribbble.com<%= link %>" data-id="<%= id %>" data-shotid="<%= shotid %>" target="_blank" >
+				<img src="http://dribbble.com<%= url %>" alt="<%= alt %>">
+				<span></span>
+			</a>
+		</script>
+		
+		<script type="text/template" id="mdbrdview-template">
+			<div id="mdbrdView">
+				<h1>Your Mdbrd</h1>
+			</div>
+		</script>
+		<script type="text/template" id="fullshot-template">
+			<a href="http://dribbble.com<%= href %>"  data-shotid="<%= shotId %>" target="_blank" >
+				<img src="http://dribbble.com<%= img.src %>" alt="<%= img.alt %>">
+				<span></span>
 			</a>
 		</script>
 
 		<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7/jquery.min.js"></script>
-		<script src="http://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.2.2/underscore-min.js"></script>
-		<script src="http://cdnjs.cloudflare.com/ajax/libs/backbone.js/0.5.3/backbone-min.js"></script>
-		<script src="app.js"></script>
-		<script src="shots.js"></script>
-		<script src="searchview.js"></script>
-		<script src="mdbrd.js"></script>
-		<script>
+		<script src="includes/underscore-min.js"></script>
+		<script src="includes/backbone-min.js"></script>
+		<script src="includes/backbone.localStorage-min.js"></script>
+		<script src="app/app.js"></script>
+		<script src="app/shots.js"></script>
+		<script src="app/searchview.js"></script>
+		<script src="app/mdbrdview.js"></script>
+		<script src="app/mdbrd.js"></script>
+		<script type="text/javascript">
 			(function ($) {
 				
 				app = new App;
+				window.Shots = new ShotList;
+				window.mdbrd = new Mdbrd;
 				Backbone.history.start();
 
 			})(jQuery);
