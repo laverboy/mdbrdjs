@@ -1,5 +1,30 @@
 //create the model, but details will be added from the search results
-Shot = Backbone.Model.extend({});
+Shot = Backbone.Model.extend({
+	defaults: function() {
+		return {
+			selected: false
+		}
+	},
+	toggle: function() {
+		this.set({selected: !this.get("selected")});
+	},
+	initialize: function() {
+		this.bind('change:selected', this.record);
+	},
+	record: function() {
+	
+		Backbone.sync = Backbone.localSync;
+		
+		var selected = this.get("selected");
+		if(selected === true){
+			mdbrd.add(this);
+		}
+		else if(selected === false){
+			mdbrd.remove(this);
+		}
+		
+	}
+});
 
 //manage the collection of shot models and render results on reset
 ShotList = Backbone.Collection.extend({
@@ -33,16 +58,17 @@ ShotList = Backbone.Collection.extend({
 		//return "http://api.dribbble.com/players/" + encodeURIComponent(this.search) +"/shots?per_page=18";
 	},
 	addOne: function(shot) {
-		//pass the individual model to a new shotvie then render
+		//pass the individual model to a new shotview then render
 		var view = new ShotView({model: shot});
 		$(this.el).append(view.render().el);
 		
 	},
 	render: function(collection){
-		$(this.el).html('<div style="clear:both;"></div>');
+		$(this.el).html('');
 		this.each(this.addOne);
+		$(this.el).append('<div style="clear:both;"></div>');
 		//Shots.render();
-	},
+	}
 }); 
 
 window.ShotView = Backbone.View.extend({
@@ -55,18 +81,24 @@ window.ShotView = Backbone.View.extend({
 	},
 	render: function(){
 		var img = this.model.get("img"),
+		href = this.model.get("href"),
+		id = href.substr(7).split("-"),
 		html = this.template({
-			id: this.id,
+			id: id[0],
 			url: img['src'],
-			link: this.model.get("href")
+			link: href,
+			alt: img['alt']
 		});
+		
+		this.model.set({shotId: id[0]});
 
 		$(this.el).append(html);
 		return this;
 	},
 	clicked: function(e) {
 		e.preventDefault();
-		console.log(e.currentTarget);
+		$(e.currentTarget).parent().toggleClass('selected');
+		this.model.toggle();
 	}
 
 });

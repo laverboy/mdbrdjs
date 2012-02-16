@@ -1,6 +1,7 @@
 App = Backbone.Router.extend({
 	routes: {
 		"/search" : "startSearch",
+		"/mdbrd" : "showMdbrd",
 		"*page" : "start"
 	},
 	start: function(){
@@ -9,5 +10,8 @@ App = Backbone.Router.extend({
 	},
 	startSearch: function(){
 		searchView = new SearchView;
+	},
+	showMdbrd: function(){
+		mdbrdView = new MdbrdView;
 	}
 });
