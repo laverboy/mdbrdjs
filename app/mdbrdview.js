@@ -1,9 +1,6 @@
 window.MdbrdView = Backbone.View.extend({
 	el: $('#contents'),
 	template: _.template($('#mdbrdview-template').html()),
-	events: {
-	
-	},
 	initialize: function(){
 		this.render();
 	},

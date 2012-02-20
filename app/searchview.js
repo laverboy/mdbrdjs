@@ -6,16 +6,17 @@ window.SearchView = Backbone.View.extend({
 		"keypress #entrybox": "searchOnEnter"
 	},
 	initialize: function() {
+		this.render();
 		if(mdbrd.length === 0){
 			mdbrd.bind('add',this.addToMdbrd);
 			mdbrd.bind('change',this.onchange);
 		} else {
+			$('#currentMdbrd').prepend($('<h2></h2>', {text: "Currently in your Mdbrd"}));
 			mdbrd.each(function (mdbrd) {
 				var mdbrdShotView = new MdbrdShotView({model: mdbrd});
-				$('#mdbrd').append(mdbrdShotView.render().el);
+				$('#currentMdbrd').append(mdbrdShotView.render().el);
 			});
 		}
-		this.render();
 	},
 	render: function(){
 		$(this.el).html(this.template);

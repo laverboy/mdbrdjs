@@ -27,6 +27,8 @@
 				<ul id="mdbrd"></ul>
 				
 				<p id="showMdbrd" style="display:none;text-align:right;"><span id="count"></span> counts selected  <a class="button" href="#/mdbrd">Save</a></p>
+
+				<ul id="currentMdbrd"></ul>
 			</div>
 		</script>
 		<script type="text/template" id="shot-template">
@@ -49,7 +51,7 @@
 		</script>
 		<script type="text/template" id="fullshot-template">
 			<a href="http://dribbble.com<%= href %>"  data-shotid="<%= shotId %>" target="_blank" >
-				<img src="http://dribbble.com<%= img.src %>" alt="<%= img.alt %>">
+				<img src="<%= bigImage %>" alt="<%= img.alt %>">
 				<span></span>
 			</a>
 		</script>
@@ -69,6 +71,7 @@
 				app = new App;
 				window.Shots = new ShotList;
 				window.mdbrd = new Mdbrd;
+
 				Backbone.history.start();
 
 			}(jQuery));
