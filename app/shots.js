@@ -40,8 +40,7 @@ ShotList = Backbone.Collection.extend({
 		if(response.query.count > 0){
 			return response.query.results.a;	
 		}else{
-			console.log("No results");
-			console.log(response);
+			console.log("parse no results", response);
 		}
 		
 	},

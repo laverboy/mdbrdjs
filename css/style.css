@@ -64,6 +64,11 @@ form#search.loading {
 	border-left: 1px solid #333;
 	margin-top: 30px;
 }
+.noresults {
+	text-align: center;
+	margin-top: 20px;
+	font-weight: 300;
+}
 .shot {
 	width:200px; height:150px;
 	float:left;

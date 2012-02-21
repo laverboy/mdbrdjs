@@ -6,6 +6,7 @@ window.SearchView = Backbone.View.extend({
 		"keypress #entrybox": "searchOnEnter"
 	},
 	initialize: function() {
+		_.bindAll(this, 'searchSuccess');
 		this.render();
 		if(mdbrd.length === 0){
 			mdbrd.bind('add',this.addToMdbrd);
@@ -32,6 +33,15 @@ window.SearchView = Backbone.View.extend({
 	},
 	searchSuccess: function(){
 		$('#search').removeClass('loading');
+		if (Shots.models.length === 0 ) {
+			console.log(this);
+			$(this.el).find('#results').append(
+				$('<p></p>', { 
+					class: 'noresults', 
+					text: "Sorry no results for that search - please try again!"
+				})
+			);	
+		}
 	},
 	searchError: function(){
 		$('#search').removeClass('loading');
