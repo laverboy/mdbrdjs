@@ -1,6 +1,9 @@
 window.MdbrdView = Backbone.View.extend({
 	el: $('#contents'),
 	template: _.template($('#mdbrdview-template').html()),
+	events: {
+		'click #save': 'saveMdbrd' 
+	},
 	initialize: function(){
 		this.render();
 	},
@@ -11,6 +14,17 @@ window.MdbrdView = Backbone.View.extend({
 	addOne: function(mdbrdshot){
 		var fullshotview = new FullShotView({model: mdbrdshot}); 
 		this.$('#contents').append(fullshotview.render().el);
+	},
+	saveMdbrd: function () {
+		var save = $.ajax({
+			url: 'data/save.php',
+			data: JSON.stringify(mdbrd.toJSON()),
+			type: 'POST',
+			dataType: 'json'
+		});
+		save.done(function (response) {
+			console.log("response: ", window.response = response);
+		});
 	}
 });
 

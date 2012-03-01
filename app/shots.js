@@ -3,7 +3,7 @@ Shot = Backbone.Model.extend({
 	defaults: function() {
 		return {
 			selected: false
-		}
+		};
 	},
 	toggle: function() {
 		this.set({selected: !this.get("selected")});
@@ -38,7 +38,7 @@ ShotList = Backbone.Collection.extend({
 	//this limits results when collection is fetched
 	parse: function(response){
 		if(response.query.count > 0){
-			return response.query.results.a;	
+			return response.query.results.a;
 		}else{
 			console.log("parse no results", response);
 		}
@@ -68,7 +68,7 @@ ShotList = Backbone.Collection.extend({
 		$(this.el).append('<div style="clear:both;"></div>');
 		//Shots.render();
 	}
-}); 
+});
 
 window.ShotView = Backbone.View.extend({
 	

@@ -8,10 +8,14 @@ window.SearchView = Backbone.View.extend({
 	initialize: function() {
 		_.bindAll(this, 'searchSuccess');
 		this.render();
-		if(mdbrd.length === 0){
-			mdbrd.bind('add',this.addToMdbrd);
-			mdbrd.bind('change',this.onchange);
-		} else {
+		mdbrd.bind('add',this.addToMdbrd);
+		mdbrd.bind('change',this.onchange);
+	},
+	render: function(){
+		$(this.el).html(this.template);
+
+		if(mdbrd.length > 0){
+			$('#showMdbrd').find('button').show();
 			$('#currentMdbrd').prepend($('<h2></h2>', {text: "Currently in your Mdbrd"}));
 			mdbrd.each(function (mdbrd) {
 				var mdbrdShotView = new MdbrdShotView({model: mdbrd});
@@ -19,14 +23,12 @@ window.SearchView = Backbone.View.extend({
 			});
 		}
 	},
-	render: function(){
-		$(this.el).html(this.template);
-	},
 	searchOnEnter: function(e) {
 		if(e.keyCode !=13) return;
 		$('#search').addClass('loading');
+		$('p.noresults').remove();
 		
-		Backbone.sync = Backbone.ajaxSync;
+		Backbone.sync = Backbone.ajaxSync;	
 		
 		Shots.search = encodeURIComponent($('#entrybox').val());
 		Shots.fetch({success: this.searchSuccess, error: this.searchError});

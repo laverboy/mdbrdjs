@@ -1,4 +1,9 @@
 App = Backbone.Router.extend({
+	initialize: function () {
+		$(document).on('click', 'button.link', function () {
+			document.location = '#/' + $(this).data('target');
+		});
+	},
 	routes: {
 		"/search" : "startSearch",
 		"/mdbrd" : "showMdbrd",
@@ -9,9 +14,9 @@ App = Backbone.Router.extend({
 		$('#contents').html(starttmplt);
 	},
 	startSearch: function(){
-		searchView = new SearchView;
+		searchView.render();
 	},
 	showMdbrd: function(){
-		mdbrdView = new MdbrdView;
+		mdbrdView.render();
 	}
 });

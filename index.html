@@ -1,8 +1,10 @@
 <!DOCTYPE html>
 <html>
 	<head>
+		<meta name="viewport" content="initial-scale=1.0,width=device-width" />	
 		<title>Mdbrd Search</title>
 		<link rel="stylesheet" href="css/style.css">
+
 	</head>
 	<body>
 
@@ -26,7 +28,9 @@
 	
 				<ul id="mdbrd"></ul>
 				
-				<p id="showMdbrd" style="display:none;text-align:right;"><span id="count"></span> counts selected  <a class="button" href="#/mdbrd">Save</a></p>
+				<p id="showMdbrd" style="display:none;text-align:right;">
+					<span id="count"></span> counts selected  <button class="link show green" data-target="mdbrd">Show</button>
+				</p>
 
 				<ul id="currentMdbrd"></ul>
 			</div>
@@ -45,13 +49,18 @@
 		</script>
 		
 		<script type="text/template" id="mdbrdview-template">
-			<div id="mdbrdView">
+			<div id="toolbar">
+				<button class="link left" data-target="search">Add More</button>
 				<h1>Your Mdbrd</h1>
+				<button id="save" class="right orange">Save</button>
+			</div>
+			<div id="mdbrdView">
+				
 			</div>
 		</script>
 		<script type="text/template" id="fullshot-template">
 			<a href="http://dribbble.com<%= href %>"  data-shotid="<%= shotId %>" target="_blank" >
-				<img src="<%= bigImage %>" alt="<%= img.alt %>">
+				<img src="<%= bigImage %>" alt="<%= img.alt %>" width="400" height="300">
 				<span></span>
 			</a>
 		</script>
@@ -71,6 +80,8 @@
 				app = new App;
 				window.Shots = new ShotList;
 				window.mdbrd = new Mdbrd;
+				searchView = new SearchView;
+				mdbrdView = new MdbrdView;
 
 				Backbone.history.start();
 

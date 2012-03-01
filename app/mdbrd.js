@@ -3,7 +3,7 @@ window.Mdbrd = Backbone.Collection.extend({
 	model: MdbrdImage,
 	localStorage: new Store("Mdbrd"),
 	initialize: function () {
-		this.bind("add", this.addBigImage)
+		this.bind("add", this.addBigImage);
 	},
 	addBigImage: function (mdbrd) {
 		var id = mdbrd.get('shotId');
