@@ -5,15 +5,16 @@ window.MdbrdView = Backbone.View.extend({
 		'click #save': 'saveMdbrd' 
 	},
 	initialize: function(){
-		this.render();
+		
 	},
 	render: function(){
-		$(this.el).html(this.template);
+		$(this.el).append(this.template);
 		mdbrd.each(this.addOne);
 	},
-	addOne: function(mdbrdshot){
-		var fullshotview = new FullShotView({model: mdbrdshot}); 
-		this.$('#contents').append(fullshotview.render().el);
+	addOne: function(selectedShot){
+		console.log(selectedShot.get('bigImage'));
+		var fullshotview = new FullShotView({model: selectedShot}); 
+		$(this.el).find('#mdbrdView').append(fullshotview.render().el);
 	},
 	saveMdbrd: function () {
 		var save = $.ajax({

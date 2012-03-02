@@ -3,25 +3,15 @@ window.SearchView = Backbone.View.extend({
 	el: $("#contents"),
 	template: _.template($('#search-template').html()),
 	events: {
-		"keypress #entrybox": "searchOnEnter"
+		"keypress #entrybox": "searchOnEnter",
+		"click #x": "hide",
+		"click #open": "open"
 	},
 	initialize: function() {
 		_.bindAll(this, 'searchSuccess');
-		this.render();
-		mdbrd.bind('add',this.addToMdbrd);
-		mdbrd.bind('change',this.onchange);
 	},
 	render: function(){
-		$(this.el).html(this.template);
-
-		if(mdbrd.length > 0){
-			$('#showMdbrd').find('button').show();
-			$('#currentMdbrd').prepend($('<h2></h2>', {text: "Currently in your Mdbrd"}));
-			mdbrd.each(function (mdbrd) {
-				var mdbrdShotView = new MdbrdShotView({model: mdbrd});
-				$('#currentMdbrd').append(mdbrdShotView.render().el);
-			});
-		}
+		$(this.el).append(this.template);
 	},
 	searchOnEnter: function(e) {
 		if(e.keyCode !=13) return;
@@ -49,18 +39,29 @@ window.SearchView = Backbone.View.extend({
 		$('#search').removeClass('loading');
 		$('#results').html("Sorry no results for that search - try again!");
 	},
-	addToMdbrd: function(mdbrd) {
-		var mdbrdShotView = new MdbrdShotView({model: mdbrd});
-		$('#mdbrd').append(mdbrdShotView.render().el);
+	hide: function () {
+		$('#searchView').animate({
+			'margin-left': '-=25%'
+		},1000);
+		$('#open').animate({
+			'left': '-=25%'
+		},1000);
+		$('#mdbrdView').animate({
+			'margin-left': '-=25%',
+			'width': '100%'
+		},1000);
 	},
-	onchange: function(){
-		var length = mdbrd.length;
-		if(length > 0){
-			$('#count').html(length);
-			$('#showMdbrd').show();
-		}else{
-			$('#showMdbrd').hide();
-		}
+	open: function () {
+		$('#searchView').animate({
+			'margin-left': '0%'
+		},1000);
+		$('#open').animate({
+			'left': '25%'
+		},1000);
+		$('#mdbrdView').animate({
+			'margin-left': '25%',
+			'width': '75%'
+		},1000);
 	}
 
 });

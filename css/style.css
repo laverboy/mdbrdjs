@@ -1,13 +1,11 @@
 @import url('reset.css');
 @import url('buttons.css');
-html{
-	background-color: #f1f1f1;
-}
 body{
 	margin: 0 auto;
 	font-size:16px;
 	font-family: "Helvetica Neue", "Helvetica", Arial, sans-serif;
 	font-weight: 100;
+	background-color:#d9d9d9;
 }
 h1 {
 	font-size:2em;
@@ -24,12 +22,31 @@ a {text-decoration: none;}
 
 /* !Search Page */
 #searchView {
-	width: 75%;
-	margin: 0 auto;
+	width: 25%;
+	margin: 0;
+	float: left;
+	height:100%;
+	overflow-y:scroll;
+	position: relative;
+}
+span#x {
+	right: 10px;
+	position: absolute;
+	top: 3px;
+	cursor: pointer;
+}
+span#open {
+	position: absolute;
+	left: 25%;
+	display: block;
+	z-index: 500;
+	margin: 3px;
+	margin-left:8px;
+	cursor: pointer;
 }
 form#search {
 	margin: 30px auto 0;
-	width: 350px;
+	width: 90%;
 	text-align: center;
 }
 form#search.loading {
@@ -37,14 +54,14 @@ form#search.loading {
 }
 #search input {
 	font-size:1.5em;
-	width:300px;
 	font-family: "Helvetica Neue", "Helvetica", Arial, sans-serif;
 	font-weight: 200;
 }
 #results {
 	border-top: 1px solid #333;
 	border-left: 1px solid #333;
-	margin-top: 30px;
+	width:90%;
+	margin: 30px auto 0px;
 }
 .noresults {
 	text-align: center;
@@ -55,7 +72,7 @@ form#search.loading {
 	position: absolute;
 }
 .shot {
-	width:200px; height:150px;
+	width:49.8113%; height:auto;
 	float:left;
 	list-style: none;
 	position: relative;
@@ -66,6 +83,7 @@ form#search.loading {
 	border-bottom-width: 1px;
 
 }
+.shot img {width:100%;max-width:100%;}
 .shot.selected span {
 	position: absolute;
 	top: 0; left: 0;
@@ -89,18 +107,18 @@ form#search.loading {
 /* !View Page */
 
 #contents {
-	width:1200px;
-	margin: 0 auto;
+	position: absolute;
+	width:100%;height:100%;
+	overflow: hidden;
 }
 
 #mdbrdView {
-	position: fixed;
-	bottom: 20px;
-	width: 300px;
-	left: 50%;
-	margin-left: -150px;
-	background-color: rgba(255,255,255,0.7);
-	border-radius: 10px;
+	width: 75%;
+	margin-left:25%;
+	position: absolute;
+	height:100%;
+	overflow-y:scroll;
+	background-color: #f1f1f1;
 }
 
 .fullShot {
@@ -120,7 +138,6 @@ form#search.loading {
 #toolbar {
 	height: 40px;
 	background-color: #353535;
-	position: absolute;
 	top: 0;
 	z-index: 50;
 	width: 100%;

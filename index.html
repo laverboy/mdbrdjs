@@ -9,30 +9,20 @@
 	<body>
 
 		<div id="contents"></div>
-		<div id="footer"></div>
 	
 
 		<!-- Templates -->
-		<script type="text/template" id="start">
-			<h1>Welcome to Mdbrd</h1>
-			<p style="text-align:center;"><a href='#/search'>Let&#39;s get started</a></p>
-		</script>
 		<script type="text/template" id="search-template">
+			<span id="open">></span>
 			<div id="searchView">
+				<span id="x">x</span>
 				<h1>Start your Search</h1>
 	
 				<form method="post" action="" id="search" name="mdbrdSearch" onsubmit="return false">
 					<input id="entrybox" type="text" name="search" value="" placeholder="Search&hellip;">	
 				</form>
 				<ul id="results"></ul>	
-	
-				<ul id="mdbrd"></ul>
-				
-				<p id="showMdbrd" style="display:none;text-align:right;">
-					<span id="count"></span> counts selected  <button class="link show green" data-target="mdbrd">Show</button>
-				</p>
 
-				<ul id="currentMdbrd"></ul>
 			</div>
 		</script>
 		<script type="text/template" id="shot-template">
@@ -41,19 +31,9 @@
 				<span></span>
 			</a>
 		</script>
-		<script type="text/template" id="mdbrdshot-template">
-			<a href="http://dribbble.com<%= link %>" data-id="<%= id %>" data-shotid="<%= shotid %>" target="_blank" >
-				<img src="http://dribbble.com<%= url %>" alt="<%= alt %>">
-				<span></span>
-			</a>
-		</script>
 		
 		<script type="text/template" id="mdbrdview-template">
-			<div id="toolbar">
-				<button class="link left" data-target="search">Add More</button>
-				<h1>Your Mdbrd</h1>
-				<button id="save" class="right orange">Save</button>
-			</div>
+			
 			<div id="mdbrdView">
 				
 			</div>
@@ -69,27 +49,23 @@
 		<script src="includes/underscore-min.js"></script>
 		<script src="includes/backbone-min.js"></script>
 		<script src="includes/backbone.localStorage-min.js"></script>
-		<script src="app/app.js"></script>
+		<script src="app/appview.js"></script>
 		<script src="app/shots.js"></script>
 		<script src="app/searchview.js"></script>
 		<script src="app/mdbrdview.js"></script>
 		<script src="app/mdbrd.js"></script>
 		<script type="text/javascript">
 			(function ($) {
-				
-				app = new App;
 				window.Shots = new ShotList;
 				window.mdbrd = new Mdbrd;
 				searchView = new SearchView;
 				mdbrdView = new MdbrdView;
-
-				Backbone.history.start();
+				app = new AppView
 
 			}(jQuery));
 
 			// What's Needed
 			// - more/pagination button
-			// - 0 results response
 			// - flickr search?
 			// - sort out styling, repsonsive
 			// - way of editing images on the final screen
