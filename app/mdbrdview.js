@@ -5,16 +5,21 @@ window.MdbrdView = Backbone.View.extend({
 		'click #save': 'saveMdbrd' 
 	},
 	initialize: function(){
-		
+		_.bindAll(this, 'addOne', 'addAll');
+		mdbrd.bind('reset', this.addAll, this);
+
+		mdbrd.fetch();
 	},
 	render: function(){
-		$(this.el).append(this.template);
+		this.$el.append(this.template);
 		mdbrd.each(this.addOne);
 	},
 	addOne: function(selectedShot){
-		console.log(selectedShot.get('bigImage'));
 		var fullshotview = new FullShotView({model: selectedShot}); 
-		$(this.el).find('#mdbrdView').append(fullshotview.render().el);
+		this.$el.find('#mdbrdView').append(fullshotview.render().el);
+	},
+	addAll: function () {
+		mdbrd.each(this.addOne);
 	},
 	saveMdbrd: function () {
 		var save = $.ajax({
@@ -36,8 +41,14 @@ window.FullShotView = Backbone.View.extend({
 	events: {
 		
 	},
+	initialize: function () {
+		this.model.bind('remove', this.remove, this);
+	},
 	render: function(){
-		$(this.el).append(this.template(this.model.toJSON()));
+		this.$el.append(this.template(this.model.toJSON()));
 		return this;
+	},
+	remove: function () {
+		this.$el.remove();
 	}
 });

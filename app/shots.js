@@ -12,11 +12,10 @@ Shot = Backbone.Model.extend({
 		this.bind('change:selected', this.record);
 	},
 	record: function() {
-	
-		Backbone.sync = Backbone.localSync;
 		
 		var selected = this.get("selected");
 		if(selected === true){
+			console.log(this);
 			mdbrd.add(this);
 		}
 		else if(selected === false){
@@ -29,7 +28,7 @@ Shot = Backbone.Model.extend({
 //manage the collection of shot models and render results on reset
 ShotList = Backbone.Collection.extend({
 	model: Shot,
-	el: '#results',
+	el: $('#results'),
 	initialize: function() {
 		_.bindAll(this, 'addOne', 'render');
 		this.bind('add', this.addOne);
@@ -59,14 +58,13 @@ ShotList = Backbone.Collection.extend({
 	addOne: function(shot) {
 		//pass the individual model to a new shotview then render
 		var view = new ShotView({model: shot});
-		$(this.el).append(view.render().el);
+		$('#results').append(view.render().el);
 		
 	},
 	render: function(collection){
-		$(this.el).html('');
+		$('#results').html('');
 		this.each(this.addOne);
-		$(this.el).append('<div style="clear:both;"></div>');
-		//Shots.render();
+		$('#results').append('<div style="clear:both;"></div>');
 	}
 });
 
@@ -91,7 +89,7 @@ window.ShotView = Backbone.View.extend({
 		
 		this.model.set({shotId: id[0]});
 
-		$(this.el).append(html);
+		this.$el.append(html);
 		return this;
 	},
 	clicked: function(e) {

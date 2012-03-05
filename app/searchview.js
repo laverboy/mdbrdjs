@@ -11,7 +11,7 @@ window.SearchView = Backbone.View.extend({
 		_.bindAll(this, 'searchSuccess');
 	},
 	render: function(){
-		$(this.el).append(this.template);
+		this.$el.append(this.template);
 	},
 	searchOnEnter: function(e) {
 		if(e.keyCode !=13) return;
@@ -22,17 +22,21 @@ window.SearchView = Backbone.View.extend({
 		
 		Shots.search = encodeURIComponent($('#entrybox').val());
 		Shots.fetch({success: this.searchSuccess, error: this.searchError});
+
+		Backbone.sync = Backbone.localSync;	
 	},
 	searchSuccess: function(){
 		$('#search').removeClass('loading');
 		if (Shots.models.length === 0 ) {
-			console.log(this);
-			$(this.el).find('#results').append(
+			this.$el.find('#results').append(
 				$('<p></p>', { 
 					class: 'noresults', 
 					text: "Sorry no results for that search - please try again!"
 				})
 			);	
+		} else {
+			$('#entrybox').blur();
+			$('#results').find('li').first().children('a').focus();
 		}
 	},
 	searchError: function(){
