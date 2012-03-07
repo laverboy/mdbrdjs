@@ -2,7 +2,7 @@ window.MdbrdView = Backbone.View.extend({
 	el: $('#contents'),
 	template: _.template($('#mdbrdview-template').html()),
 	events: {
-		'click #save': 'saveMdbrd' 
+		'click #save': 'saveMdbrd'
 	},
 	initialize: function(){
 		_.bindAll(this, 'addOne', 'addAll');
@@ -15,7 +15,7 @@ window.MdbrdView = Backbone.View.extend({
 		mdbrd.each(this.addOne);
 	},
 	addOne: function(selectedShot){
-		var fullshotview = new FullShotView({model: selectedShot}); 
+		var fullshotview = new FullShotView({model: selectedShot});
 		this.$el.find('#mdbrdView').append(fullshotview.render().el);
 	},
 	addAll: function () {

@@ -15,8 +15,7 @@ Shot = Backbone.Model.extend({
 		
 		var selected = this.get("selected");
 		if(selected === true){
-			console.log(this);
-			mdbrd.add(this);
+			mdbrd.create(this.toJSON());
 		}
 		else if(selected === false){
 			mdbrd.remove(this);

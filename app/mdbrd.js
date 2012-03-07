@@ -4,16 +4,20 @@ window.Mdbrd = Backbone.Collection.extend({
 	localStorage: new Store("Mdbrds"),
 	initialize: function () {
 		this.bind("add", this.addBigImage);
+		this.bind("remove", this.remove);
 	},
 	addBigImage: function (mdbrdModel) {
 		var id = mdbrdModel.get('shotId');
 		var bigData = $.getJSON('http://api.dribbble.com/shots/' + id + '?callback=?');
 		bigData.success(function (response) {
-			mdbrdModel.set({
+			mdbrdModel.save({
 				bigImage: response.image_url
 			});
-			mdbrd.create(mdbrdModel.toJSON());
 			mdbrdView.addOne(mdbrdModel);
 		});
+	},
+	remove: function (mdbrdModel) {
+		mdbrdModel.destroy();
+		console.log("Should have been destroyed");
 	}
 });
