@@ -86,7 +86,7 @@ window.ShotView = Backbone.View.extend({
 			alt: img['alt']
 		});
 		
-		this.model.set({shotId: id[0]});
+		this.model.set({shotId: id[0], id: id[0]});
 
 		this.$el.append(html);
 		return this;

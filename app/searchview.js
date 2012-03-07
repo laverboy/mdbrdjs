@@ -18,22 +18,22 @@ window.SearchView = Backbone.View.extend({
 		$('#search').addClass('loading');
 		$('p.noresults').remove();
 		
-		Backbone.sync = Backbone.ajaxSync;	
+		Backbone.sync = Backbone.ajaxSync;
 		
 		Shots.search = encodeURIComponent($('#entrybox').val());
 		Shots.fetch({success: this.searchSuccess, error: this.searchError});
 
-		Backbone.sync = Backbone.localSync;	
+		Backbone.sync = Backbone.localSync;
 	},
 	searchSuccess: function(){
 		$('#search').removeClass('loading');
 		if (Shots.models.length === 0 ) {
 			this.$el.find('#results').append(
-				$('<p></p>', { 
-					class: 'noresults', 
+				$('<p></p>', {
+					class: 'noresults',
 					text: "Sorry no results for that search - please try again!"
 				})
-			);	
+			);
 		} else {
 			$('#entrybox').blur();
 			$('#results').find('li').first().children('a').focus();

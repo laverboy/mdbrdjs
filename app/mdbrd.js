@@ -4,7 +4,7 @@ window.Mdbrd = Backbone.Collection.extend({
 	localStorage: new Store("Mdbrds"),
 	initialize: function () {
 		this.bind("add", this.addBigImage);
-		this.bind("remove", this.remove);
+		this.bind("remove", this.deleteModel);
 	},
 	addBigImage: function (mdbrdModel) {
 		var id = mdbrdModel.get('shotId');
@@ -16,8 +16,9 @@ window.Mdbrd = Backbone.Collection.extend({
 			mdbrdView.addOne(mdbrdModel);
 		});
 	},
-	remove: function (mdbrdModel) {
+	deleteModel: function (mdbrdModel) {
+		window.m = mdbrdModel;
 		mdbrdModel.destroy();
-		console.log("Should have been destroyed");
+		return false;
 	}
 });
