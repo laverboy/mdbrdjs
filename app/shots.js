@@ -75,6 +75,10 @@ window.ShotView = Backbone.View.extend({
 	tagName: 'li',
 	className: 'shot',
 	template: _.template($('#shot-template').html()),
+	initialize: function () {
+		_.bindAll(this, 'toggleClass');
+		this.model.bind('change:selected', this.toggleClass);
+	},
 	events: {
 		"click a" : "clicked"
 	},
@@ -96,8 +100,10 @@ window.ShotView = Backbone.View.extend({
 	},
 	clicked: function(e) {
 		e.preventDefault();
-		$(e.currentTarget).parent().toggleClass('selected');
 		this.model.toggle();
+	},
+	toggleClass: function () {
+		this.$el.toggleClass('selected');
 	}
 
 });

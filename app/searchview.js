@@ -20,24 +20,28 @@ window.SearchView = Backbone.View.extend({
 		
 		Backbone.sync = Backbone.ajaxSync;
 		
+		Shots.page = 1;
 		Shots.search = encodeURIComponent($('#entrybox').val());
 		Shots.fetch({success: this.searchSuccess, error: this.searchError});
 
 		Backbone.sync = Backbone.localSync;
 	},
 	searchSuccess: function(){
-		$('#search').removeClass('loading');
+		this.$el.find('#search').removeClass('loading');
 		if (Shots.models.length === 0 ) {
-			this.$el.find('#results').append(
-				$('<p></p>', {
-					class: 'noresults',
-					text: "Sorry no results for that search - please try again!"
-				})
-			);
+			this.searchEmpty();
 		} else {
-			$('#entrybox').blur();
-			$('#results').find('li').first().children('a').focus();
+			this.$el.find('#entrybox').blur();
+			this.$el.find('#results').find('li').first().children('a').focus();
 		}
+	},
+	searchEmpty: function () {
+		this.$el.find('#results').append(
+			$('<p></p>', {
+				class: 'noresults',
+				text: "Sorry no results for that search - please try again!"
+			})
+		);
 	},
 	searchError: function(){
 		$('#search').removeClass('loading');

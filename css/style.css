@@ -83,6 +83,7 @@ form#search.loading {
 }
 .noresults {
 	text-align: center;
+	color: #d9d9d9;
 	margin-top: 20px;
 	font-weight: 300;
 	width:100%;
@@ -211,6 +212,7 @@ form#search.loading {
 
 
 
+/*
 @media screen and (max-width: 1199px) {
 	#contents {width:800px;}
 }
@@ -218,3 +220,4 @@ form#search.loading {
 	#contents {width:100%;}
 	.fullShot {width:50%;height:auto;}
 }
+*/
