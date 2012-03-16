@@ -7,3 +7,9 @@ Do a search, select some images, move them round, then save and share!
 
 We hope you enjoy it (when it's finished)!
 
+
+___
+
+
+*Made by the guys at [messagecreative.com](http://www.messagecreative.com)*
+
