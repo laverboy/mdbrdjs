@@ -56,11 +56,11 @@ span#open {
 }
 form#search {
 	margin: 30px auto 0;
-	width: 85%;
 	text-align: center;
+	padding-bottom: 15px;
 }
 form#search.loading {
-	background: url(loading.gif) no-repeat right center;
+	background: url(../images/loading.gif) no-repeat 50% bottom;
 }
 #search input {
 	color: #f0f0f0;
@@ -72,14 +72,14 @@ form#search.loading {
 	height: 38px;
 	border-radius: 6px;
 	box-shadow: 0px 1px 1px #555, 0px -1px 1px #000;
-	width: 100%;
-	text-indent: 6%;
+	width: 69%;
+	padding-left: 6%;
 }
 #results {
 	border-top: 1px solid #333;
 	border-left: 1px solid #333;
 	width:90%;
-	margin: 30px auto 0px;
+	margin: 15px auto 0;
 }
 .noresults {
 	text-align: center;
@@ -141,6 +141,8 @@ form#search.loading {
 	width:400px;
 	height:300px;
 	background: url(../images/checker.gif) no-repeat center center;
+	position: relative;
+	overflow: hidden;
 }
 .fullShot a img {
 	margin: 0 auto ;
@@ -149,6 +151,39 @@ form#search.loading {
 	max-width:100%;
 	height:auto;
 }
+.options {
+	width: 35px;
+	height: 20px;
+	background-color: #d9d9d9;
+	position: absolute;
+	top: 7px;
+	right: 0;
+	border-top-left-radius: 5px;
+	border-bottom-left-radius: 5px;
+	border: 1px solid #333;
+	border-right-width: 0;
+	
+	margin-right: -36px;
+	-webkit-transition: all .3s;
+}
+.trash, .link {
+	width: 12px; height: 20px;	
+	margin-right: 3px;
+	background-position: center center;
+	background-repeat: no-repeat;
+	float: right;
+}
+.link {
+	background-image: url(../images/info.png);
+	
+}
+.trash {
+	background-image: url(../images/minus.png);
+	
+}
+.fullShot:hover .options {margin-right: 0;}
+
+
 /* !Toolbar */
 #toolbar {
 	height: 40px;

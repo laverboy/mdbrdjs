@@ -12,6 +12,8 @@
 	
 
 		<!-- Templates -->
+		
+		<!-- ======== Search View Template =======  -->
 		<script type="text/template" id="search-template">
 			<span id="open">></span>
 			<div id="searchView">
@@ -25,6 +27,8 @@
 
 			</div>
 		</script>
+		
+		<!-- ======== Search Results Template =======  -->
 		<script type="text/template" id="shot-template">
 			<a href="#">
 				<img src="http://dribbble.com<%= url %>" alt="<%= alt %>">
@@ -32,17 +36,23 @@
 			</a>
 		</script>
 		
+		<!-- ======== Mdbrd View Template =======  -->
 		<script type="text/template" id="mdbrdview-template">
 			
 			<div id="mdbrdView">
 				
 			</div>
 		</script>
+		
+		<!-- ======== Large Mdbrd Shot Template =======  -->
 		<script type="text/template" id="fullshot-template">
-			<a href="http://dribbble.com<%= href %>"  data-shotid="<%= shotId %>" target="_blank" >
+			<div data-shotid="<%= shotId %>">
 				<img src="<%= bigImage %>" alt="<%= img.alt %>" width="400" height="300">
-				<span></span>
-			</a>
+				<div class="options">
+					<a class="trash" href="#"></a>
+					<a class="link" href="http://dribbble.com<%= href %>" target="_blank" ></a>
+				</div>
+			</div>
 		</script>
 
 		<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7/jquery.min.js"></script>

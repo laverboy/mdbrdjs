@@ -42,10 +42,13 @@ ShotList = Backbone.Collection.extend({
 		}
 		
 	},
+	page: 1,
 	//fetch shots from dribble. 'search' is set in the view.
 	url: function() {
 		var searchRoot = "http://query.yahooapis.com/v1/public/yql?q=";
-		var searchUrl = "select * from html where url='http://dribbble.com/search?page=1&q=";
+		var searchUrl = "select * from html where url='http://dribbble.com/search?page=";
+		searchUrl += this.page;
+		searchUrl += "&q=";
 		searchUrl += this.search;
 		searchUrl += "' and xpath='//div[@class=\"dribbble-img\"]/a[1]'";
 		searchEnd = "&format=json&callback";

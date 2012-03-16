@@ -39,7 +39,7 @@ window.FullShotView = Backbone.View.extend({
 	className: 'fullShot',
 	template: _.template($('#fullshot-template').html()),
 	events: {
-		
+		'click .trash' : 'removeFromMdbrd'
 	},
 	initialize: function () {
 		this.model.bind('remove', this.remove, this);
@@ -47,6 +47,9 @@ window.FullShotView = Backbone.View.extend({
 	render: function(){
 		this.$el.append(this.template(this.model.toJSON()));
 		return this;
+	},
+	removeFromMdbrd: function () {
+		this.model.destroy();
 	},
 	remove: function () {
 		this.$el.remove();
