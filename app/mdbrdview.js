@@ -49,8 +49,7 @@ window.FullShotView = Backbone.View.extend({
 		return this;
 	},
 	removeFromMdbrd: function () {
-		var id = this.model.get("id");
-		var shot = Shots.get(id);
+		var shot = Shots.get(this.model.get("id"));
 		if (shot) shot.toggle();
 		this.model.destroy();
 	},
