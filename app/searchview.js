@@ -6,7 +6,8 @@ window.SearchView = Backbone.View.extend({
 		"keypress #entrybox": "searchOnEnter",
 		"click #x": "hide",
 		"click #open": "open",
-		"click #more": "search"
+		"click #more": "search",
+		"click #clear": "reset"
 	},
 	initialize: function() {
 		_.bindAll(this, 'searchSuccess', 'preSearch');
@@ -84,6 +85,10 @@ window.SearchView = Backbone.View.extend({
 				id: 'more'
 			})
 		);
+	},
+	reset: function (e) {
+		e.preventDefault();
+		mdbrd.reset();
 	}
 
 });

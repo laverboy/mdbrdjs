@@ -35,10 +35,26 @@ a {text-decoration: none;}
 	position: relative;
 	background: url(../images/sideTop.jpg) no-repeat center top;
 }
+#tools {
+	position: absolute;
+	z-index: 20;
+}
+#tools a {
+	width:20px;
+	height:20px;
+	margin: 5px ;
+	display: block;
+	text-indent: -9999px;
+
+	background-color:#fff;
+	float: left;
+}
+#tools #clear {background-color:red;}
+
 span#x {
 	right: 5px;
 	position: absolute;
-	top: 7px;
+	top: 2px;
 	cursor: pointer;
 	width: 20px;
 	height: 20px;
@@ -118,6 +134,11 @@ form#search.loading {
 .mdbrdshot a {text-decoration: none;}
 .mdbrdshot a img {
 	width: 100px;
+}
+
+#more {
+	display: block;
+	margin: 20px 50%;
 }
 
 /* !View Page */

@@ -17,7 +17,6 @@ window.Mdbrd = Backbone.Collection.extend({
 		});
 	},
 	deleteModel: function (mdbrdModel) {
-		window.m = mdbrdModel;
 		mdbrdModel.destroy();
 		return false;
 	}
