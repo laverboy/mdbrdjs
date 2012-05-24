@@ -18,7 +18,9 @@ Shot = Backbone.Model.extend({
 			mdbrd.create(this.toJSON());
 		}
 		else if(selected === false){
-			mdbrd.remove(this);
+			
+            var mdbrdImage = mdbrd.get(this.id);
+            if (mdbrdImage) mdbrdImage.clear();
 		}
 		
 	}

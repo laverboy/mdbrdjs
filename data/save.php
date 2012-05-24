@@ -6,28 +6,48 @@ function post($key) {
         return $_POST[$key];
     return false;
 }
-$mdbrd = file_get_contents("php://input");
-print_r($mdbrd);
-// # connect to the database
-// try {  
-//   $DBH = new PDO("mysql:host=localhost;dbname=mdbrdjs", root, root);  
-//   $DBH->setAttribute( PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION );  
-  
-//   #save data
-//   $save = $DBH->prepare("INSERT INTO mdbrds (mdbrd) value (:mdbrd)");
-//   $save->bindParam(':mdbrd', $mdbrd);
-//   $save->execute();
 
-//   $ID = $DBH->lastInsertID();
+# connect to the database
+try {  
+  $DBH = new PDO("mysql:host=localhost;dbname=mdbrdjs", root, root);  
+  $DBH->setAttribute( PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION ); 
 
-//   $read = $DBH->prepare("SELECT mdbrd from mdbrds WHERE id = :id");
-//   $read->bindParam(':id', $ID);
-//   $read->execute();
-//   $result = $read->fetchAll();
-//   print_r($result[0][mdbrd]);
+    switch ($_SERVER['REQUEST_METHOD']) {
+        case 'GET':
+            $ID = $_GET['id'];
+            
+            $read = $DBH->prepare("SELECT mdbrd from mdbrds WHERE id = :id");
+            $read->bindParam(':id', $ID);
+            $read->execute();
+            $result = $read->fetchAll();
+            echo($result[0][mdbrd]);
+            break;
 
-// }  
-// catch(PDOException $e) {  
-//     echo "I'm sorry, Dave. I'm afraid I can't do that.";  
-//     file_put_contents('PDOErrors.txt', $e->getMessage(), FILE_APPEND);  
-// }
+        case 'DELETE':
+            # code...
+            break;
+
+        case 'PUT':
+            # code...
+            break;
+
+        case 'POST':
+            $mdbrd = file_get_contents("php://input");
+
+            #save data
+            $save = $DBH->prepare("INSERT INTO mdbrds (mdbrd) value (:mdbrd)");
+            $save->bindParam(':mdbrd', $mdbrd);
+            $save->execute();
+
+            $ID = $DBH->lastInsertID();
+
+            // return new Response($ID, 200, array('Content-Type' => 'application/json'));
+            echo $ID;
+            break;
+    }
+}
+
+catch(PDOException $e) {  
+    echo "I'm sorry, Dave. I'm afraid I can't do that.";  
+    file_put_contents('PDOErrors.txt', $e->getMessage(), FILE_APPEND);  
+}

@@ -1,5 +1,18 @@
 @import url('reset.css');
 @import url('buttons.css');
+
+@font-face {
+    font-family: 'EntypoRegular';
+    src: url('../includes/entypo/entypo-webfont.eot');
+    src: url('../includes/entypo/entypo-webfont.eot?#iefix') format('embedded-opentype'),
+         url('../includes/entypo/entypo-webfont.woff') format('woff'),
+         url('../includes/entypo/entypo-webfont.ttf') format('truetype'),
+         url('../includes/entypo/entypo-webfont.svg#EntypoRegular') format('svg');
+    font-weight: normal;
+    font-style: normal;
+
+}
+
 body{
 	margin: 0 auto;
 	font-size:16px;
@@ -38,18 +51,19 @@ a {text-decoration: none;}
 #tools {
 	position: absolute;
 	z-index: 20;
+    left:40%;
 }
 #tools a {
 	width:20px;
 	height:20px;
+    line-height:20px;
 	margin: 5px ;
 	display: block;
-	text-indent: -9999px;
-
-	background-color:#fff;
 	float: left;
+    font-family: "EntypoRegular";
+    font-size: 40px;
+    color: #242424;
 }
-#tools #clear {background-color:red;}
 
 span#x {
 	right: 5px;

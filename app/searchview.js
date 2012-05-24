@@ -1,4 +1,4 @@
-window.SearchView = Backbone.View.extend({
+var SearchView = Backbone.View.extend({
 					
 	el: $("#contents"),
 	template: _.template($('#search-template').html()),
@@ -7,16 +7,20 @@ window.SearchView = Backbone.View.extend({
 		"click #x": "hide",
 		"click #open": "open",
 		"click #more": "search",
-		"click #clear": "reset"
+		"click #clear": "reset",
+        "click #save": "saveMdbrd"
 	},
 	initialize: function() {
 		_.bindAll(this, 'searchSuccess', 'preSearch');
+
+        this.render();
 	},
 	render: function(){
 		this.$el.append(this.template);
 	},
 	search: function () {
 		this.$el.find('#more').remove();
+        this.$el.find('#results').html('');
 		Backbone.sync = Backbone.ajaxSync;
 		Shots.fetch({success: this.searchSuccess, error: this.searchError});
 		Backbone.sync = Backbone.localSync;
@@ -54,7 +58,7 @@ window.SearchView = Backbone.View.extend({
 		this.$el.find('#results').html("Sorry no results for that search - try again!");
 	},
 	hide: function () {
-		this.$el.find('#searchView').animate({'margin-left': '-=25%'},1000);
+		this.$el.find('#searchView').animate({'left': '-=25%'},1000);
 		this.$el.find('#open').animate({'left': '-=25%'},1000);
 		this.$el.find('#mdbrdView').animate({
 			'margin-left': '-=25%',
@@ -62,19 +66,20 @@ window.SearchView = Backbone.View.extend({
 		},1000);
 	},
 	open: function () {
-		this.$el.find('#searchView').animate({'margin-left': '0%'},1000);
-		this.$el.find('#open').animate({'left': '25%'},1000);
+		this.$el.find('#searchView').animate({'left': '+=25%'},1000);
+		this.$el.find('#open').animate({'left': '+=25%'},1000);
 		this.$el.find('#mdbrdView').animate({
-			'margin-left': '25%',
-			'width': '75%'
+			'margin-left': '+=25%',
+			'width': '-=25%'
 		},1000);
 	},
 	preSearch: function () {
-		Shots.page = Shots.page + 1;
+        var that = this;
+		Shots.page++;
 		var searchN = $.get(Shots.url());
-		searchN.success(function (response) {
+		searchN.done(function (response) {
 			var count = response.query.count;
-			if(count > 0) searchView.addMoreButton();
+			if(count > 0) that.addMoreButton();
 		});
 	},
 	addMoreButton: function () {
@@ -88,7 +93,13 @@ window.SearchView = Backbone.View.extend({
 	},
 	reset: function (e) {
 		e.preventDefault();
-		mdbrd.reset();
-	}
+		_.each($(mdbrd.models).toArray(), function (model) {
+            model.clear();
+        });
+	},
+    saveMdbrd: function (e) {
+        e.preventDefault();
+        mdbrd.saveToDb();
+    }
 
 });

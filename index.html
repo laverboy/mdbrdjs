@@ -15,12 +15,12 @@
 		
 		<!-- ======== Search View Template =======  -->
 		<script type="text/template" id="search-template">
-			<div id="tools">
-				<a id="save" href="#">Save Mdbrd</a>
-				<a id="clear" href="#">Clear Mdbrd</a>
-			</div>
 			<span id="open">></span>
 			<div id="searchView">
+				<div id="tools">
+					<a id="save" href="#">x</a>
+					<a id="clear" href="#">u</a>
+				</div>
 				<span id="x"><</span>
 				<h1>Start your search</h1>
 	
@@ -62,32 +62,12 @@
 		<script src="includes/underscore-min.js"></script>
 		<script src="includes/backbone-min.js"></script>
 		<script src="includes/backbone.localStorage-min.js"></script>
-		<script src="app/appview.js"></script>
 		<script src="app/shots.js"></script>
 		<script src="app/searchview.js"></script>
 		<script src="app/mdbrdview.js"></script>
 		<script src="app/mdbrd.js"></script>
-		<script type="text/javascript">
-			(function ($) {
-				window.Shots = new ShotList;
-				window.mdbrd = new Mdbrd;
-				searchView = new SearchView;
-				mdbrdView = new MdbrdView;
-				app = new AppView
+		<script src="app/appview.js"></script>
 
-			}(jQuery));
-
-			// What's Needed
-			// - more/pagination button
-			// - flickr/etsy search?
-			// - sort out styling, repsonsive
-			// - way of editing images on the final screen
-			// - saving properly and getting share link
-
-			
-
-			
-		</script>
 	</body>
 
 	

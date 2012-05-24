@@ -1,14 +1,12 @@
-window.MdbrdView = Backbone.View.extend({
+var MdbrdView = Backbone.View.extend({
 	el: $('#contents'),
 	template: _.template($('#mdbrdview-template').html()),
-	events: {
-		'click #save': 'saveMdbrd'
-	},
 	initialize: function(){
 		_.bindAll(this, 'addOne', 'addAll');
 		mdbrd.bind('reset', this.addAll, this);
+        mdbrd.bind('change:bigImage', this.addOne, this);
 
-		mdbrd.fetch();
+        this.render();
 	},
 	render: function(){
 		this.$el.append(this.template);
@@ -20,40 +18,27 @@ window.MdbrdView = Backbone.View.extend({
 	},
 	addAll: function () {
 		mdbrd.each(this.addOne);
-	},
-	saveMdbrd: function () {
-		var save = $.ajax({
-			url: 'data/save.php',
-			data: JSON.stringify(mdbrd.toJSON()),
-			type: 'POST',
-			dataType: 'json'
-		});
-		save.done(function (response) {
-			console.log("response: ", window.response = response);
-		});
 	}
 });
 
-window.FullShotView = Backbone.View.extend({
+var FullShotView = Backbone.View.extend({
 	tagName: 'div',
 	className: 'fullShot',
 	template: _.template($('#fullshot-template').html()),
 	events: {
-		'click .trash' : 'removeFromMdbrd'
+		'click .trash' : 'clear'
 	},
 	initialize: function () {
-		this.model.bind('remove', this.remove, this);
+		this.model.bind('destroy', this.removeView, this);
 	},
 	render: function(){
 		this.$el.append(this.template(this.model.toJSON()));
 		return this;
 	},
-	removeFromMdbrd: function () {
-		var shot = Shots.get(this.model.get("id"));
-		if (shot) shot.toggle();
-		this.model.destroy();
+	clear: function () {
+		this.model.clear();
 	},
-	remove: function () {
+	removeView: function () {
 		this.$el.remove();
 	}
 });
