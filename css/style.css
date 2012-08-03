@@ -18,7 +18,6 @@ body{
 	font-size:16px;
 	font-family: "Helvetica Neue", "Helvetica", Arial, sans-serif;
 	font-weight: 100;
-	background:#d9d9d9 url(../images/bg.gif);
 }
 h1 {
 	font-size: 1.8em;
@@ -27,10 +26,10 @@ h1 {
 	font-family: "Proxima Nova";
 	font-weight: 400;
 	color: #212121;
-	text-shadow: 0px 1px 1px gray, 0px -1px 1px black;
+	text-shadow: 0 1px 1px gray, 0 -1px 1px black;
 
 }
-h2 {margin: 20px 0px;}
+h2 {margin: 20px 0;}
 a {text-decoration: none;}
 
 
@@ -41,12 +40,17 @@ a {text-decoration: none;}
 /* !Search Page */
 #searchView {
 	width: 25%;
+	height: 100%;
+	overflow-y: scroll;
 	margin: 0;
 	float: left;
-	height:100%;
-	overflow-y:scroll;
 	position: relative;
+	z-index: 2;
 	background: url(../images/sideTop.jpg) no-repeat center top;
+	-webkit-transition: all 0.5s;
+}
+.full #searchView {
+    margin-left: -25%;
 }
 #tools {
 	position: absolute;
@@ -75,14 +79,16 @@ span#x {
 	text-align: center;
 	line-height: 20px;
 }
-span#open {
+span#full {
 	position: absolute;
-	left: 25%;
 	display: block;
+	padding: 5px;
 	z-index: 500;
-	margin: 3px;
-	margin-left:8px;
+	margin: 5px;
 	cursor: pointer;
+	background-color: black;
+	color: white;
+	font-weight: bold;
 }
 form#search {
 	margin: 30px auto 0;
@@ -158,20 +164,40 @@ form#search.loading {
 /* !View Page */
 
 #contents {
-	position: absolute;
+    position: absolute;
 	width:100%;height:100%;
 	overflow: hidden;
 }
 
 #mdbrdView {
 	width: 75%;
-	margin-left:25%;
-	position: absolute;
+	float: right;
 	height:100%;
-	overflow-y:scroll;
 	background-color: #f1f1f1;
+	position: relative;
+	z-index: 1;
+	-webkit-transition: all 0.5s;
 }
-
+#mdbrdView::before {
+	content: "";
+	position: absolute;
+	z-index: -1;
+	top: 0;
+	left: -100%;
+	width: 100%;
+	height: 100%;
+	background: #000 url(../images/bg.gif);
+	-webkit-box-shadow: inset -3px 0px 6px 0px rgba(0, 0, 0, 0.15);
+	-moz-box-shadow: inset -3px 0px 6px 0px rgba(0, 0, 0, 0.15);
+	box-shadow: inset -3px 0px 6px 0px rgba(0, 0, 0, 0.15);
+}
+#mdbrdView .bigShots {
+    height: 100%;
+    overflow-y: scroll;
+}
+.full #mdbrdView {
+    width: 100%;
+}
 .fullShot {
 	float: left;
 	width:400px;

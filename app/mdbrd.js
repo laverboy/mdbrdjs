@@ -19,13 +19,19 @@ var Mdbrd = Backbone.Collection.extend({
 		this.bind("add", this.addBigImage);
 	},
 	addBigImage: function (mdbrdModel) {
-		var id = mdbrdModel.get('shotId');
-		var bigData = $.getJSON('http://api.dribbble.com/shots/' + id + '?callback=?');
-		bigData.done(function (response) {
-			mdbrdModel.save({
-				bigImage: response.image_url
+		var hasBigImage = mdbrdModel.get('bigImage');
+		if (!hasBigImage) {
+			console.log(false);
+			var id = mdbrdModel.get('shotId');
+			var bigData = $.getJSON('http://api.dribbble.com/shots/' + id + '?callback=?');
+			bigData.done(function (response) {
+				mdbrdModel.save({
+					bigImage: response.image_url
+				});
 			});
-		});
+		} else {
+			mdbrdModel.trigger('change:bigImage');
+		}
 	},
     saveToDb: function () {
         var save = $.ajax({

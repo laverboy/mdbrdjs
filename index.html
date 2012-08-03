@@ -8,7 +8,26 @@
 	</head>
 	<body>
 
-		<div id="contents"></div>
+		<div id="contents" class="clearfix">
+    		<div id="mdbrdView">
+        		<span id="full">-</span>
+				<div class="bigShots"></div>
+			</div>
+			
+			<div id="searchView">
+				<div id="tools">
+					<a id="save" href="#">x</a>
+					<a id="clear" href="#">u</a>
+				</div>
+				<h1>Start your search</h1>
+	
+				<form method="post" action="" id="search" name="mdbrdSearch" onsubmit="return false">
+					<input id="entrybox" type="text" name="search" value="" placeholder="Search&hellip;">	
+				</form>
+				<ul id="results"></ul>	
+
+			</div>
+		</div>
 	
 
 		<!-- Templates -->
@@ -35,7 +54,7 @@
 		<!-- ======== Search Results Template =======  -->
 		<script type="text/template" id="shot-template">
 			<a href="#">
-				<img src="http://dribbble.com<%= url %>" alt="<%= alt %>">
+				<img src="<%= url %>" alt="<%= alt %>">
 				<span></span>
 			</a>
 		</script>
@@ -43,7 +62,7 @@
 		<!-- ======== Mdbrd View Template =======  -->
 		<script type="text/template" id="mdbrdview-template">
 			<div id="mdbrdView">
-				
+				<div></div>
 			</div>
 		</script>
 		
@@ -62,11 +81,7 @@
 		<script src="includes/underscore-min.js"></script>
 		<script src="includes/backbone-min.js"></script>
 		<script src="includes/backbone.localStorage-min.js"></script>
-		<script src="app/shots.js"></script>
-		<script src="app/searchview.js"></script>
-		<script src="app/mdbrdview.js"></script>
-		<script src="app/mdbrd.js"></script>
-		<script src="app/appview.js"></script>
+		<script src="app/appview-ck.js"></script>
 
 	</body>
 

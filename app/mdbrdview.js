@@ -1,23 +1,27 @@
 var MdbrdView = Backbone.View.extend({
-	el: $('#contents'),
+	el: $('#mdbrdView'),
 	template: _.template($('#mdbrdview-template').html()),
 	initialize: function(){
 		_.bindAll(this, 'addOne', 'addAll');
 		mdbrd.bind('reset', this.addAll, this);
-        mdbrd.bind('change:bigImage', this.addOne, this);
-
-        this.render();
+		mdbrd.bind('change:bigImage', this.addOne, this);
+	},
+	events: {
+    	"click #full" : "fullToggle"
 	},
 	render: function(){
-		this.$el.append(this.template);
 		mdbrd.each(this.addOne);
 	},
 	addOne: function(selectedShot){
 		var fullshotview = new FullShotView({model: selectedShot});
-		this.$el.find('#mdbrdView').append(fullshotview.render().el);
+		this.$el.find('.bigShots').append(fullshotview.render().el);
 	},
 	addAll: function () {
 		mdbrd.each(this.addOne);
+	},
+	fullToggle: function (e) {
+    	e.preventDefault();
+    	$('#contents').toggleClass('full');
 	}
 });
 

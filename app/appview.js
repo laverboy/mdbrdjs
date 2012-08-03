@@ -1,13 +1,12 @@
 var AppView = Backbone.View.extend({
 
 	el: $('#contents'),
-
 	initialize: function () {
         this.render();
 	},
 	render: function () {
-        var searchView = new SearchView(),
-        mdbrdView = new MdbrdView();
+        var mdbrdView = new MdbrdView(),
+        searchView = new SearchView();
 	}
 });
 
@@ -35,6 +34,7 @@ var AppRouter = Backbone.Router.extend({
        load.success(function (response) {
             if(response === null) console.log('no response');
            // !!! deal with null repsonse
+           
            _.each($(mdbrd.models).toArray(), function (model) {
                 model.clear();
             });
@@ -46,7 +46,6 @@ var AppRouter = Backbone.Router.extend({
        });
     },
     default: function () {
-        console.log(Backbone.sync);
         mdbrd.fetch();
     }
 });
