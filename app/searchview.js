@@ -14,9 +14,7 @@ var SearchView = Backbone.View.extend({
 	search: function () {
 		this.$el.find('#more').remove();
         this.$el.find('#results').html('');
-		Backbone.sync = Backbone.ajaxSync;
 		Shots.fetch({success: this.searchSuccess, error: this.searchError});
-		Backbone.sync = Backbone.localSync;
 	},
 	searchOnEnter: function(e) {
 		if(e.keyCode !=13) return;
@@ -71,8 +69,9 @@ var SearchView = Backbone.View.extend({
 	reset: function (e) {
 		e.preventDefault();
 		_.each($(mdbrd.models).toArray(), function (model) {
-            model.clear();
+            mdbrd.remove(model);
         });
+        if (window.location.hash != "") window.location.href = window.location.pathname;
 	},
     saveMdbrd: function (e) {
         e.preventDefault();

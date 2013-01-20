@@ -9,9 +9,6 @@ var MdbrdView = Backbone.View.extend({
 	events: {
     	"click #full" : "fullToggle"
 	},
-	render: function(){
-		mdbrd.each(this.addOne);
-	},
 	addOne: function(selectedShot){
 		var fullshotview = new FullShotView({model: selectedShot});
 		this.$el.find('.bigShots').append(fullshotview.render().el);
@@ -33,14 +30,15 @@ var FullShotView = Backbone.View.extend({
 		'click .trash' : 'clear'
 	},
 	initialize: function () {
-		this.model.bind('destroy', this.removeView, this);
+		this.model.bind('remove', this.removeView, this);
 	},
 	render: function(){
 		this.$el.append(this.template(this.model.toJSON()));
 		return this;
 	},
-	clear: function () {
-		this.model.clear();
+	clear: function (e) {
+    	e.preventDefault();
+		mdbrd.remove(this.model);
 	},
 	removeView: function () {
 		this.$el.remove();

@@ -11,16 +11,22 @@ Shot = Backbone.Model.extend({
 	initialize: function() {
 		this.bind('change:selected', this.record);
 	},
+	parse: function(response) {
+    	var hash = {};
+    	hash.img = response['div']['noscript']['img'];
+    	hash.href = response["a"][0]['href'];
+    	return hash;
+	},
 	record: function() {
 		
 		var selected = this.get("selected");
 		if(selected === true){
-			mdbrd.create(this.toJSON());
+			mdbrd.add(this.toJSON());
 		}
 		else if(selected === false){
 			
             var mdbrdImage = mdbrd.get(this.id);
-            if (mdbrdImage) mdbrdImage.clear();
+            if (mdbrdImage) mdbrd.remove(mdbrdImage);
 		}
 		
 	}
@@ -38,7 +44,9 @@ ShotList = Backbone.Collection.extend({
 	//this limits results when collection is fetched
 	parse: function(response){
 		if(response.query.count > 0){
-			return response.query.results.a;
+    		console.log(response);
+    		
+			return response.query.results.div;
 		}else{
 			console.log("parse no results", response);
 		}
@@ -54,7 +62,7 @@ ShotList = Backbone.Collection.extend({
 		searchUrl += this.page;
 		searchUrl += "&q=";
 		searchUrl += this.search;
-		searchUrl += "' and xpath='//div[@class=\"dribbble-img\"]/a[1]'";
+		searchUrl += "' and xpath='//div[@class=\"dribbble-img\"]'";
 		
 		//console.log(searchRoot + encodeURIComponent(searchUrl) + searchEnd);
 
@@ -112,9 +120,9 @@ window.ShotView = Backbone.View.extend({
 
 });
 
-/*********************************************** 
-     Begin searchview.js 
-***********************************************/ 
+/* **********************************************
+     Begin searchview.js
+********************************************** */
 
 var SearchView = Backbone.View.extend({
 					
@@ -132,9 +140,7 @@ var SearchView = Backbone.View.extend({
 	search: function () {
 		this.$el.find('#more').remove();
         this.$el.find('#results').html('');
-		Backbone.sync = Backbone.ajaxSync;
 		Shots.fetch({success: this.searchSuccess, error: this.searchError});
-		Backbone.sync = Backbone.localSync;
 	},
 	searchOnEnter: function(e) {
 		if(e.keyCode !=13) return;
@@ -189,8 +195,9 @@ var SearchView = Backbone.View.extend({
 	reset: function (e) {
 		e.preventDefault();
 		_.each($(mdbrd.models).toArray(), function (model) {
-            model.clear();
+            mdbrd.remove(model);
         });
+        if (window.location.hash != "") window.location.href = window.location.pathname;
 	},
     saveMdbrd: function (e) {
         e.preventDefault();
@@ -199,9 +206,9 @@ var SearchView = Backbone.View.extend({
 
 });
 
-/*********************************************** 
-     Begin mdbrdview.js 
-***********************************************/ 
+/* **********************************************
+     Begin mdbrdview.js
+********************************************** */
 
 var MdbrdView = Backbone.View.extend({
 	el: $('#mdbrdView'),
@@ -213,9 +220,6 @@ var MdbrdView = Backbone.View.extend({
 	},
 	events: {
     	"click #full" : "fullToggle"
-	},
-	render: function(){
-		mdbrd.each(this.addOne);
 	},
 	addOne: function(selectedShot){
 		var fullshotview = new FullShotView({model: selectedShot});
@@ -238,30 +242,31 @@ var FullShotView = Backbone.View.extend({
 		'click .trash' : 'clear'
 	},
 	initialize: function () {
-		this.model.bind('destroy', this.removeView, this);
+		this.model.bind('remove', this.removeView, this);
 	},
 	render: function(){
 		this.$el.append(this.template(this.model.toJSON()));
 		return this;
 	},
-	clear: function () {
-		this.model.clear();
+	clear: function (e) {
+    	e.preventDefault();
+		mdbrd.remove(this.model);
 	},
 	removeView: function () {
 		this.$el.remove();
 	}
 });
 
-/*********************************************** 
-     Begin mdbrd.js 
-***********************************************/ 
+/* **********************************************
+     Begin mdbrd.js
+********************************************** */
 
 var MdbrdImage = Backbone.Model.extend({
     initialize: function () {
-        this.bind("destroy", this.checkForShot);
+        this.bind("remove", this.checkForShot);
     },
     clear: function () {
-        this.destroy();
+        this.remove();
     },
     checkForShot: function () {
         // when a model is removed check if there is a
@@ -272,18 +277,17 @@ var MdbrdImage = Backbone.Model.extend({
 });
 var Mdbrd = Backbone.Collection.extend({
 	model: MdbrdImage,
-	localStorage: new Store("Mdbrds"),
+	url: 'data/save.php',
 	initialize: function () {
 		this.bind("add", this.addBigImage);
 	},
 	addBigImage: function (mdbrdModel) {
 		var hasBigImage = mdbrdModel.get('bigImage');
 		if (!hasBigImage) {
-			console.log(false);
 			var id = mdbrdModel.get('shotId');
 			var bigData = $.getJSON('http://api.dribbble.com/shots/' + id + '?callback=?');
 			bigData.done(function (response) {
-				mdbrdModel.save({
+				mdbrdModel.set({
 					bigImage: response.image_url
 				});
 			});
@@ -298,22 +302,19 @@ var Mdbrd = Backbone.Collection.extend({
             type: 'POST'
         });
         save.done(function (response) {
-            console.log("response: ", window.response = response);
+            window.location.hash = '#/' + response;
         });
     }
 });
 
-/*********************************************** 
-     Begin appview.js 
-***********************************************/ 
+/* **********************************************
+     Begin appview.js
+********************************************** */
 
 var AppView = Backbone.View.extend({
 
 	el: $('#contents'),
 	initialize: function () {
-        this.render();
-	},
-	render: function () {
         var mdbrdView = new MdbrdView(),
         searchView = new SearchView();
 	}
@@ -321,41 +322,32 @@ var AppView = Backbone.View.extend({
 
 var AppRouter = Backbone.Router.extend({
     routes: {
-        '': 'default',
-        '/:id': 'view'
+        '/:id': 'view',
+        '': "start"
     },
     initialize: function () {
-
         //setup models
         window.Shots = new ShotList();
+    },
+    start : function() {
         window.mdbrd = new Mdbrd();
-
-        //show
-        var appView = new AppView();
+        var appView = new AppView();   
     },
     view: function (id) {
-       var load = $.ajax({
-            url: 'data/save.php',
+        $('.bigShots').html('');
+        window.mdbrd = new Mdbrd({id: id});
+        mdbrd.fetch({
             data: {id: id},
-            type: 'GET',
-            dataType: 'json'
-       });
-       load.success(function (response) {
-            if(response === null) console.log('no response');
-           // !!! deal with null repsonse
-           
-           _.each($(mdbrd.models).toArray(), function (model) {
-                model.clear();
-            });
-
-           _.each(response, function (model) {
-               console.log(model);
-               mdbrd.create(model);
-           });
-       });
-    },
-    default: function () {
-        mdbrd.fetch();
+            success: function() {
+                $('#contents').addClass('full');
+            },
+            error: function() {
+                console.log('error');
+                window.location.hash = '';
+            }
+        });
+        var appView = new AppView();
+        
     }
 });
 

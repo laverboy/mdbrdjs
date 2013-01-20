@@ -11,16 +11,22 @@ Shot = Backbone.Model.extend({
 	initialize: function() {
 		this.bind('change:selected', this.record);
 	},
+	parse: function(response) {
+    	var hash = {};
+    	hash.img = response['div']['noscript']['img'];
+    	hash.href = response["a"][0]['href'];
+    	return hash;
+	},
 	record: function() {
 		
 		var selected = this.get("selected");
 		if(selected === true){
-			mdbrd.create(this.toJSON());
+			mdbrd.add(this.toJSON());
 		}
 		else if(selected === false){
 			
             var mdbrdImage = mdbrd.get(this.id);
-            if (mdbrdImage) mdbrdImage.clear();
+            if (mdbrdImage) mdbrd.remove(mdbrdImage);
 		}
 		
 	}
@@ -38,7 +44,9 @@ ShotList = Backbone.Collection.extend({
 	//this limits results when collection is fetched
 	parse: function(response){
 		if(response.query.count > 0){
-			return response.query.results.a;
+    		console.log(response);
+    		
+			return response.query.results.div;
 		}else{
 			console.log("parse no results", response);
 		}
@@ -54,7 +62,7 @@ ShotList = Backbone.Collection.extend({
 		searchUrl += this.page;
 		searchUrl += "&q=";
 		searchUrl += this.search;
-		searchUrl += "' and xpath='//div[@class=\"dribbble-img\"]/a[1]'";
+		searchUrl += "' and xpath='//div[@class=\"dribbble-img\"]'";
 		
 		//console.log(searchRoot + encodeURIComponent(searchUrl) + searchEnd);
 
