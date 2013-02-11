@@ -9,7 +9,7 @@ function post($key) {
 
 # connect to the database
 try {  
-  $DBH = new PDO("mysql:host=localhost;dbname=mdbrdjs", root, root);  
+  $DBH = new PDO("mysql:host=localhost;dbname=mdbrdDB", "mdbrdadmin", "mdbrd");  
   $DBH->setAttribute( PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION ); 
 
     switch ($_SERVER['REQUEST_METHOD']) {
@@ -47,7 +47,7 @@ try {
     }
 }
 
-catch(PDOException $e) {  
-    echo "I'm sorry, Dave. I'm afraid I can't do that.";  
-    file_put_contents('PDOErrors.txt', $e->getMessage(), FILE_APPEND);  
+catch(PDOException $e) {
+    file_put_contents('PDOErrors.txt', $e->getMessage(), FILE_APPEND);
+    echo "I'm sorry, Dave. I'm afraid I can't do that.";
 }

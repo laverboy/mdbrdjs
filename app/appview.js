@@ -39,7 +39,7 @@ var AppRouter = Backbone.Router.extend({
 });
 
 var app = new AppRouter();
-Backbone.history.start({root: '/webdev/Test%20Area/mdbrdjs/'});
+Backbone.history.start();
 
 // What's Needed
 // - back pagination button
