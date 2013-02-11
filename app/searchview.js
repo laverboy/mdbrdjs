@@ -1,29 +1,20 @@
 var SearchView = Backbone.View.extend({
 					
-	el: $("#contents"),
+	el: $("#searchView"),
 	template: _.template($('#search-template').html()),
 	events: {
 		"keypress #entrybox": "searchOnEnter",
-		"click #x": "hide",
-		"click #open": "open",
-		"click #more": "search",
+		"click #more" : "search",
 		"click #clear": "reset",
-        "click #save": "saveMdbrd"
+        "click #save" : "saveMdbrd"
 	},
 	initialize: function() {
 		_.bindAll(this, 'searchSuccess', 'preSearch');
-
-        this.render();
-	},
-	render: function(){
-		this.$el.append(this.template);
 	},
 	search: function () {
 		this.$el.find('#more').remove();
         this.$el.find('#results').html('');
-		Backbone.sync = Backbone.ajaxSync;
 		Shots.fetch({success: this.searchSuccess, error: this.searchError});
-		Backbone.sync = Backbone.localSync;
 	},
 	searchOnEnter: function(e) {
 		if(e.keyCode !=13) return;
@@ -57,22 +48,6 @@ var SearchView = Backbone.View.extend({
 		this.$el.find('#search').removeClass('loading');
 		this.$el.find('#results').html("Sorry no results for that search - try again!");
 	},
-	hide: function () {
-		this.$el.find('#searchView').animate({'left': '-=25%'},1000);
-		this.$el.find('#open').animate({'left': '-=25%'},1000);
-		this.$el.find('#mdbrdView').animate({
-			'margin-left': '-=25%',
-			'width': '100%'
-		},1000);
-	},
-	open: function () {
-		this.$el.find('#searchView').animate({'left': '+=25%'},1000);
-		this.$el.find('#open').animate({'left': '+=25%'},1000);
-		this.$el.find('#mdbrdView').animate({
-			'margin-left': '+=25%',
-			'width': '-=25%'
-		},1000);
-	},
 	preSearch: function () {
         var that = this;
 		Shots.page++;
@@ -94,8 +69,9 @@ var SearchView = Backbone.View.extend({
 	reset: function (e) {
 		e.preventDefault();
 		_.each($(mdbrd.models).toArray(), function (model) {
-            model.clear();
+            mdbrd.remove(model);
         });
+        if (window.location.hash != "") window.location.href = window.location.pathname;
 	},
     saveMdbrd: function (e) {
         e.preventDefault();

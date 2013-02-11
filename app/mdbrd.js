@@ -1,9 +1,9 @@
 var MdbrdImage = Backbone.Model.extend({
     initialize: function () {
-        this.bind("destroy", this.checkForShot);
+        this.bind("remove", this.checkForShot);
     },
     clear: function () {
-        this.destroy();
+        this.remove();
     },
     checkForShot: function () {
         // when a model is removed check if there is a
@@ -14,18 +14,23 @@ var MdbrdImage = Backbone.Model.extend({
 });
 var Mdbrd = Backbone.Collection.extend({
 	model: MdbrdImage,
-	localStorage: new Store("Mdbrds"),
+	url: 'data/save.php',
 	initialize: function () {
 		this.bind("add", this.addBigImage);
 	},
 	addBigImage: function (mdbrdModel) {
-		var id = mdbrdModel.get('shotId');
-		var bigData = $.getJSON('http://api.dribbble.com/shots/' + id + '?callback=?');
-		bigData.done(function (response) {
-			mdbrdModel.save({
-				bigImage: response.image_url
+		var hasBigImage = mdbrdModel.get('bigImage');
+		if (!hasBigImage) {
+			var id = mdbrdModel.get('shotId');
+			var bigData = $.getJSON('http://api.dribbble.com/shots/' + id + '?callback=?');
+			bigData.done(function (response) {
+				mdbrdModel.set({
+					bigImage: response.image_url
+				});
 			});
-		});
+		} else {
+			mdbrdModel.trigger('change:bigImage');
+		}
 	},
     saveToDb: function () {
         var save = $.ajax({
@@ -34,7 +39,7 @@ var Mdbrd = Backbone.Collection.extend({
             type: 'POST'
         });
         save.done(function (response) {
-            console.log("response: ", window.response = response);
+            window.location.hash = '#/' + response;
         });
     }
 });

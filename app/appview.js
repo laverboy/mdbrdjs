@@ -1,53 +1,40 @@
 var AppView = Backbone.View.extend({
 
 	el: $('#contents'),
-
 	initialize: function () {
-        this.render();
-	},
-	render: function () {
-        var searchView = new SearchView(),
-        mdbrdView = new MdbrdView();
+        var mdbrdView = new MdbrdView(),
+        searchView = new SearchView();
 	}
 });
 
 var AppRouter = Backbone.Router.extend({
     routes: {
-        '': 'default',
-        '/:id': 'view'
+        '/:id': 'view',
+        '': "start"
     },
     initialize: function () {
-
         //setup models
         window.Shots = new ShotList();
+    },
+    start : function() {
         window.mdbrd = new Mdbrd();
-
-        //show
-        var appView = new AppView();
+        var appView = new AppView();   
     },
     view: function (id) {
-       var load = $.ajax({
-            url: 'data/save.php',
+        $('.bigShots').html('');
+        window.mdbrd = new Mdbrd({id: id});
+        mdbrd.fetch({
             data: {id: id},
-            type: 'GET',
-            dataType: 'json'
-       });
-       load.success(function (response) {
-            if(response === null) console.log('no response');
-           // !!! deal with null repsonse
-           _.each($(mdbrd.models).toArray(), function (model) {
-                model.clear();
-            });
-
-           _.each(response, function (model) {
-               console.log(model);
-               mdbrd.create(model);
-           });
-       });
-    },
-    default: function () {
-        console.log(Backbone.sync);
-        mdbrd.fetch();
+            success: function() {
+                $('#contents').addClass('full');
+            },
+            error: function() {
+                console.log('error');
+                window.location.hash = '';
+            }
+        });
+        var appView = new AppView();
+        
     }
 });
 
@@ -55,7 +42,6 @@ jQuery(document).ready(function ($) {
     var app = new AppRouter();
     Backbone.history.start({root: '/webdev/Test%20Area/mdbrdjs/'});    
 });
-
 
 // What's Needed
 // - back pagination button
