@@ -86,9 +86,11 @@ span#full {
 	z-index: 500;
 	margin: 5px;
 	cursor: pointer;
-	background-color: black;
+	background-color: rgb(60,60,60);
 	color: white;
 	font-weight: bold;
+    top:0;
+    left:-23px;
 }
 form#search {
 	margin: 30px auto 0;

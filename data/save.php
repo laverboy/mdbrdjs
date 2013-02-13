@@ -9,8 +9,15 @@ function post($key) {
 
 # connect to the database
 try {  
-  $DBH = new PDO("mysql:host=localhost;dbname=mdbrdDB", "mdbrdadmin", "mdbrd");  
+#  $DBH = new PDO("mysql:host=localhost;dbname=mdbrdDB", "mdbrdadmin", "mdbrd");
+  $DBH = new PDO("sqlite:data.sqlite3");  
   $DBH->setAttribute( PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION ); 
+  
+  $DBH->exec("CREATE TABLE IF NOT EXISTS mdbrds (
+                    id INTEGER PRIMARY KEY,
+                    time DATETIME DEFAULT CURRENT_TIMESTAMP, 
+                    mdbrd TEXT)
+            ");
 
     switch ($_SERVER['REQUEST_METHOD']) {
         case 'GET':
@@ -35,7 +42,7 @@ try {
             $mdbrd = file_get_contents("php://input");
 
             #save data
-            $save = $DBH->prepare("INSERT INTO mdbrds (mdbrd) value (:mdbrd)");
+            $save = $DBH->prepare("INSERT INTO mdbrds (mdbrd) values (:mdbrd)");
             $save->bindParam(':mdbrd', $mdbrd);
             $save->execute();
 
