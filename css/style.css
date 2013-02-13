@@ -1,17 +1,6 @@
 @import url('reset.css');
 @import url('buttons.css');
-
-@font-face {
-    font-family: 'EntypoRegular';
-    src: url('../includes/entypo/entypo-webfont.eot');
-    src: url('../includes/entypo/entypo-webfont.eot?#iefix') format('embedded-opentype'),
-         url('../includes/entypo/entypo-webfont.woff') format('woff'),
-         url('../includes/entypo/entypo-webfont.ttf') format('truetype'),
-         url('../includes/entypo/entypo-webfont.svg#EntypoRegular') format('svg');
-    font-weight: normal;
-    font-style: normal;
-
-}
+@import url('font-awesome.css');
 
 body{
 	margin: 0 auto;
@@ -64,8 +53,6 @@ a {text-decoration: none;}
 	margin: 5px ;
 	display: block;
 	float: left;
-    font-family: "EntypoRegular";
-    font-size: 40px;
     color: #242424;
 }
 
