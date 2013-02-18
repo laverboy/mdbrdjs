@@ -7,7 +7,7 @@ body{
 	font-size:16px;
 	font-family: "Helvetica Neue", "Helvetica", Arial, sans-serif;
 	font-weight: 100;
-    background-color:rgb(60,60,60);
+    background-color:rgb(245,245,245);
 }
 h1 {
 	font-size: 1.8em;
@@ -35,6 +35,8 @@ a {text-decoration: none;}
 	margin: 0;
 	float: left;
 	position: relative;
+    background-color: rgb(60,60,60);
+    min-height:1045px;
 	z-index: 2;
 	-webkit-transition: all 0.5s;
 }
@@ -166,7 +168,6 @@ form#search.loading {
 	width: 75%;
 	float: right;
 	height:100%;
-	background-color: #f1f1f1;
 	position: relative;
 	z-index: 1;
 	-webkit-transition: all 0.5s;
@@ -179,7 +180,6 @@ form#search.loading {
 	left: -100%;
 	width: 100%;
 	height: 100%;
-	background: rgb(60,60,60);
 	-webkit-box-shadow: inset -3px 0px 6px 0px rgba(0, 0, 0, 0.15);
 	-moz-box-shadow: inset -3px 0px 6px 0px rgba(0, 0, 0, 0.15);
 	box-shadow: inset -3px 0px 6px 0px rgba(0, 0, 0, 0.15);
@@ -207,36 +207,19 @@ form#search.loading {
 	height:auto;
 }
 .options {
-	width: 35px;
-	height: 20px;
-	background-color: #d9d9d9;
+    padding:5px;
+	background-color: rgb(60,60,60);
 	position: absolute;
 	top: 7px;
 	right: 0;
 	border-top-left-radius: 5px;
 	border-bottom-left-radius: 5px;
-	border: 1px solid #333;
-	border-right-width: 0;
-	
-	margin-right: -36px;
+	margin-right: -41px;
 	-webkit-transition: all .3s;
 }
-.trash, .link {
-	width: 12px; height: 20px;	
-	margin-right: 3px;
-	background-position: center center;
-	background-repeat: no-repeat;
-	float: right;
-}
-.link {
-	background-image: url(../images/info.png);
-	
-}
-.trash {
-	background-image: url(../images/minus.png);
-	
-}
 .fullShot:hover .options {margin-right: 0;}
+
+.options a {color:#eee;}
 
 
 /* !Toolbar */
@@ -265,13 +248,13 @@ form#search.loading {
 .right {float: right;}
 
 
+/* 4 = 1600, 1200,800 */
+@media screen and (max-width: 1599px) {
+	#contents {width:1200px;}
+    #mdbrdView {width:66.66666666%}
+    #searchView {width: 33.33333333%}
+    .full #searchView {
+        margin-left: -33.33333333%;
+    }
+}
 
-/*
-@media screen and (max-width: 1199px) {
-	#contents {width:800px;}
-}
-@media screen and (max-width: 800px) {	
-	#contents {width:100%;}
-	.fullShot {width:50%;height:auto;}
-}
-*/
