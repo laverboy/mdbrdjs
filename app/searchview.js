@@ -1,7 +1,6 @@
 var SearchView = Backbone.View.extend({
 					
 	el: $("#searchView"),
-	template: _.template($('#search-template').html()),
 	events: {
 		"keypress #entrybox": "searchOnEnter",
 		"click #more" : "search",

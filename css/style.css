@@ -31,7 +31,6 @@ a {text-decoration: none;}
 #searchView {
 	width: 25%;
 	height: 100%;
-	overflow-y: scroll;
 	margin: 0;
 	float: left;
 	position: relative;
@@ -186,7 +185,6 @@ form#search.loading {
 }
 #mdbrdView .bigShots {
     height: 100%;
-    overflow-y: scroll;
 }
 .full #mdbrdView {
     width: 100%;
