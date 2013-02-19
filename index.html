@@ -7,22 +7,24 @@
 
 	</head>
 	<body>
-
-		<div id="contents">
+        <header class="wrap">
+            <div id="tools">
+    			<a id="save" href="#"><i class="icon-save"></i></a>
+				<a id="clear" href="#"><i class="icon-trash"></i></a>
+			</div>
+            <h1>mdbrd</h1>
+        </header>
+		<div id="contents" class="wrap">
     		<div id="mdbrdView">
         		<span id="full"><i class="icon-chevron-left"></i> <i class="icon-chevron-right"></i></span>
 				<div class="bigShots"></div>
 			</div>
 			
 			<div id="searchView">
-				<div id="tools">
-					<a id="save" href="#"><i class="icon-save"></i></a>
-					<a id="clear" href="#"><i class="icon-trash"></i></a>
-				</div>
-				<h1>Start your search</h1>
+				
 	
 				<form method="post" action="" id="search" name="mdbrdSearch" onsubmit="return false">
-					<input id="entrybox" type="text" name="search" value="" placeholder="Search&hellip;">	
+					<input id="entrybox" type="text" name="search" value="" placeholder="Start your search&hellip;">	
 				</form>
 				<ul id="results"></ul>	
 

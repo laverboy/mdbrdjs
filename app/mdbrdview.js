@@ -18,6 +18,7 @@ var MdbrdView = Backbone.View.extend({
 	},
 	fullToggle: function (e) {
     	e.preventDefault();
+        console.log('full clicked');
     	$('#contents').toggleClass('full');
 	}
 });

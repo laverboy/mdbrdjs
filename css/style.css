@@ -7,22 +7,25 @@ body{
 	font-size:16px;
 	font-family: "Helvetica Neue", "Helvetica", Arial, sans-serif;
 	font-weight: 100;
-    background-color:rgb(245,245,245);
+    background-color: #ebebeb;
 }
 h1 {
-	font-size: 1.8em;
-	text-align: center;
-	padding-top: 40px;
+	font-size: 1.2em;
 	font-family: "Proxima Nova";
 	font-weight: 400;
 	color: #212121;
-	text-shadow: 0 1px 1px gray, 0 -1px 1px black;
-
 }
 h2 {margin: 20px 0;}
 a {text-decoration: none;}
-
-
+.wrap {
+    width:1600px;
+    margin: 10px auto;
+}
+#contents {
+    height:100%;
+    overflow: hidden;
+    background-color: white;
+}
 #footer {
 	clear: both;
 }
@@ -43,15 +46,10 @@ a {text-decoration: none;}
     margin-left: -25%;
 }
 #tools {
-	position: absolute;
-	z-index: 20;
-    left:40%;
+	float: right;
 }
 #tools a {
-	width:20px;
-	height:20px;
-    line-height:20px;
-	margin: 5px ;
+	margin: 0 5px ;
 	display: block;
 	float: left;
     color: #242424;
@@ -89,17 +87,19 @@ form#search.loading {
 	background: url(../images/loading.gif) no-repeat 50% bottom;
 }
 #search input {
-	color: #f0f0f0;
+	color: rgb(245,245,245);
 	font-size: 1.2em;
-	font-family: "Helvetica Neue", "Helvetica", Arial, sans-serif;
-	font-weight: 600;
-	background: url(../images/searchBg.jpg) repeat-x left center;
+	font-family: "Helvetica", Arial, sans-serif;
+	font-weight: 100;
+    background-color: rgb(60,60,60);
 	border: none;
 	height: 38px;
 	border-radius: 6px;
-	box-shadow: 0px 1px 1px #555, 0px -1px 1px #000;
 	width: 69%;
 	padding-left: 6%;
+}
+#search input:focus {
+    outline: none;
 }
 #results {
 	border-top: 1px solid #333;
@@ -121,9 +121,10 @@ form#search.loading {
 	float:left;
 	list-style: none;
 	position: relative;
+    width:179px;
+    height:134px;
 	max-width:200px;
 	line-height:0;
-
 }
 .shot img {width:100%;max-width:100%;}
 .shot.selected span {
@@ -155,13 +156,6 @@ form#search.loading {
 }
 
 /* !View Page */
-
-#contents {
-    width:1600px;
-    height:100%;
-	overflow: hidden;
-    margin: 0 auto;
-}
 
 #mdbrdView {
 	width: 75%;
@@ -248,7 +242,7 @@ form#search.loading {
 
 /* 4 = 1600, 1200,800 */
 @media screen and (max-width: 1599px) {
-	#contents {width:1200px;}
+	.wrap {width:1200px;}
     #mdbrdView {width:66.66666666%}
     #searchView {width: 33.33333333%}
     .full #searchView {
