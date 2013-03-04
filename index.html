@@ -1,75 +1,152 @@
 <!DOCTYPE html>
-<html>
-	<head>
-		<meta name="viewport" content="initial-scale=1.0,width=device-width" />
-		<title>Mdbrd</title>
-		<link rel="stylesheet" href="css/style.css">
+<html ng-app="mdbrd">
+    <head>
+        <meta name="viewport" content="initial-scale=1.0,width=device-width" />
+        <title>Mdbrd</title>
+        <link rel="stylesheet" href="css/style.css">
+        <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.0.5/angular.min.js"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.0.5/angular-resource.min.js"></script>
+        <script src="includes/underscore-min.js"></script>
+        <script type="text/javascript">
+            var app = angular.module('mdbrd', ['ngResource'], function ($provide) {
+                $provide.factory('db', ['$http', function(http) {
+                    var items = [];
+                    var modify = {
+                        addItem: function  (item) {
+                            item.bigImageUrl = this.getBigImage(item);
+                            items.push(item);
+                        },
+                        removeItem: function (item) { items.splice(items.indexOf(item), 1); },
+                        toggleItem: function (item) {
+                            ( this.hasItem(item) ) ? this.removeItem(item) : this.addItem(item);
+                        },
+                        getItems: function () { return items; },
+                        hasItem: function (item) {
+                            return ( _.find(items, function (i) { return i.id === item.id; }) ) ? true : false;
+                        },
+                        getBigImage: function (item) {
+                            http.jsonp('http://api.dribbble.com/shots/' + item.id + '?callback=JSON_CALLBACK')
+                            .success(function (response) {
+                                item.bigImageUrl = response.image_url
+                            });
+                        }
+                        
+                    };
+                    return modify;
+                }]);
+            });
 
-	</head>
-	<body>
+            app.run( function($rootScope) {
+                $rootScope.full = false;
+            });
+
+            function searchCtrl ($scope, $resource, db) {
+
+                $scope.shots = [];
+                $scope.loading = false;
+
+                $scope.dribbble = $resource('https://query.yahooapis.com/v1/public/yql',
+                        {q: '', format: 'json', callback:'JSON_CALLBACK'},
+                        {get:{method: 'JSONP'}}
+                    );
+                
+                var searchUrl = "select * from html where url='http://dribbble.com/search?q=",
+                    searchUrlEnd = "' and xpath='//div[@class=\"dribbble-img\"]'";
+
+                $scope.startSearch = function () {
+                    var newSearchUrl = searchUrl + encodeURIComponent($scope.search) + searchUrlEnd;
+                    $scope.loading = true;
+                    $scope.dribbble.get({q: newSearchUrl}, function(data){
+                        console.log('yql results: ', data);
+                        // handle 0 result
+                        var shotsArray = _.map(data.query.results.div, function(num){
+                            var newNum = {
+                                'url' : 'http:' + num.div.noscript.img.src,
+                                'alt' : 'http:' + num.div.noscript.img.alt,
+                                'href': num.a[0].href,
+                                'id'  : num.a[0].href.substr(7).split("-")[0],
+                                'selected' : false
+                            };
+                            return newNum;
+                        });
+                        $scope.shots.push(shotsArray);
+                        $scope.loading = false;
+                        console.log('shots: ', $scope.shots);
+                    });
+                }
+
+                $scope.toggleSelected = function (shot, $event) {
+                    $event.preventDefault();
+                    // shot.selected = !shot.selected;
+                    db.toggleItem(shot);
+                }
+
+                $scope.isSelected = function (item) {
+                    return db.hasItem(item);
+                }
+            }
+
+            function mdbrdCtrl ($scope, db, $rootScope) {
+                
+                $scope.images = db.getItems();
+
+                $scope.toggleFullScreen = function () {
+                    $rootScope.full = !$rootScope.full;
+                }
+                $scope.removeItem = function (item) {
+                    db.removeItem(item);
+                }
+            }
+        </script>
+    </head>
+    <body>
         <header class="wrap">
             <div id="tools">
-    			<a id="save" href="#"><i class="icon-save"></i></a>
-				<a id="clear" href="#"><i class="icon-trash"></i></a>
-			</div>
+                <a id="save" href="#"><i class="icon-save"></i></a>
+                <a id="clear" href="#"><i class="icon-trash"></i></a>
+            </div>
             <h1>mdbrd</h1>
         </header>
-		<div id="contents" class="wrap">
-    		<div id="mdbrdView">
-        		<span id="full"><i class="icon-chevron-left"></i> <i class="icon-chevron-right"></i></span>
-				<div class="bigShots"></div>
-			</div>
-			
-			<div id="searchView">
-				
-	
-				<form method="post" action="" id="search" name="mdbrdSearch" onsubmit="return false">
-					<input id="entrybox" type="text" name="search" value="" placeholder="Start your search&hellip;">	
-				</form>
-				<ul id="results"></ul>	
+        <div id="contents" ng-class="{full: full}" class="wrap">
 
-			</div>
-		</div>
-	
+            <div id="mdbrdView" ng-controller="mdbrdCtrl">
+                <span id="full" ng-click="toggleFullScreen()"><i class="icon-chevron-left"></i> <i class="icon-chevron-right"></i></span>
+                <div class="bigShots">
+                    <div class="fullShot" ng-repeat="image in images">
+                        <div data-shotid="{{ image.$$hashkey }}">
+                            <img ng-src="{{ image.bigImageUrl }}" alt="{{ image.alt }}" width="400" height="300">
+                            <div class="options">
+                                <a class="trash" ng-click="removeItem(image)"><i class="icon-trash"></i></a>
+                                <a class="link" href="http://dribbble.com{{ image.href }}" target="_blank" ><i class="icon-info-sign"></i></a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div id="searchView" ng-controller="searchCtrl">
+    
+                <form ng-submit="startSearch()" method="post" action="" id="search" ng-class="{loading: loading}">
+                    <input ng-model="search" id="entrybox" type="text" placeholder="Start your search&hellip;">    
+                </form>
+                <ul id="results">
+                    <li ng-repeat="page in shots">
+                        <ul>
+                            <li ng-repeat="thumb in page" class="shot" ng-class="{selected: isSelected(thumb)}">
+                                <a href="#" ng-click="toggleSelected(thumb, $event)">
+                                    <img ng-src="{{thumb.url}}" alt="{{thumb.alt}}">
+                                    <span></span>
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
 
-		<!-- Templates -->
-		
-		<!-- ======== Search Results Template =======  -->
-		<script type="text/template" id="shot-template">
-			<a href="#">
-				<img src="<%= url %>" alt="<%= alt %>">
-				<span></span>
-			</a>
-		</script>
-		
-		<!-- ======== Mdbrd View Template =======  -->
-		<script type="text/template" id="mdbrdview-template">
-			<div id="mdbrdView">
-				<div></div>
-			</div>
-		</script>
-		
-		<!-- ======== Large Mdbrd Shot Template =======  -->
-		<script type="text/template" id="fullshot-template">
-			<div data-shotid="<%= shotId %>">
-				<img src="<%= bigImage %>" alt="<%= img.alt %>" width="400" height="300">
-				<div class="options">
-					<a class="trash" href="#"><i class="icon-trash"></i></a>
-					<a class="link" href="http://dribbble.com<%= href %>" target="_blank" ><i class="icon-info-sign"></i></a>
-				</div>
-			</div>
-		</script>
+            </div>
+        </div>
+        
 
-		<script src="includes/jquery-1.9.0.min.js"></script>
-		<script src="includes/underscore-min.js"></script>
-		<script src="includes/backbone-min.js"></script>
-        <script src="app/mdbrd.js"></script>
-        <script src="app/mdbrdview.js"></script>
-        <script src="app/searchview.js"></script>
-        <script src="app/shots.js"></script>
-        <script src="app/appview.js"></script>
+    </body>
 
-	</body>
-
-	
+    
 </html>
