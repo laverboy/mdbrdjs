@@ -83,9 +83,7 @@ form#search {
 	text-align: center;
 	padding-bottom: 15px;
 }
-form#search.loading {
-	background: url(../images/loading.gif) no-repeat 50% bottom;
-}
+
 #search input {
 	color: rgb(245,245,245);
 	font-size: 1.2em;
@@ -101,11 +99,23 @@ form#search.loading {
 #search input:focus {
     outline: none;
 }
+#search i {
+    color: rgb(245,245,245);
+    margin-left:5px;
+    visibility: hidden;
+}
+#search.loading i { visibility: visible; }
+
 #results {
-	border-top: 1px solid #333;
-	border-left: 1px solid #333;
-	width:90%;
+	width: 400px;
 	margin: 15px auto 0;
+    position: absolute;
+    right: 0;
+}
+#results > li {
+    width: 360px;
+    margin: 0 20px;
+    float: left;
 }
 .noresults {
 	text-align: center;

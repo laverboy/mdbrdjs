@@ -1,5 +1,5 @@
 var app = angular.module('mdbrd', ['ngResource'], function ($provide) {
-    $provide.factory('db', ['$http', function(http) {
+    $provide.factory('mdbrddb', ['$http', function(http) {
         var items = [];
         var modify = {
             addItem: function  (item) {
@@ -17,7 +17,7 @@ var app = angular.module('mdbrd', ['ngResource'], function ($provide) {
             getBigImage: function (item) {
                 http.jsonp('http://api.dribbble.com/shots/' + item.id + '?callback=JSON_CALLBACK')
                 .success(function (response) {
-                    item.bigImageUrl = response.image_url
+                    item.bigImageUrl = response.image_url;
                 });
             }
             
@@ -30,7 +30,7 @@ app.run( function($rootScope) {
     $rootScope.full = false;
 });
 
-function searchCtrl ($scope, $resource, db) {
+function searchCtrl ($scope, $resource, mdbrddb) {
 
     $scope.shots = [];
     $scope.loading = false;
@@ -63,27 +63,27 @@ function searchCtrl ($scope, $resource, db) {
             $scope.loading = false;
             console.log('shots: ', $scope.shots);
         });
-    }
+    };
 
     $scope.toggleSelected = function (shot, $event) {
         $event.preventDefault();
         // shot.selected = !shot.selected;
-        db.toggleItem(shot);
-    }
+        mdbrddb.toggleItem(shot);
+    };
 
     $scope.isSelected = function (item) {
-        return db.hasItem(item);
-    }
+        return mdbrddb.hasItem(item);
+    };
 }
 
-function mdbrdCtrl ($scope, db, $rootScope) {
+function mdbrdCtrl ($scope, mdbrddb, $rootScope) {
     
-    $scope.images = db.getItems();
+    $scope.images = mdbrddb.getItems();
 
     $scope.toggleFullScreen = function () {
         $rootScope.full = !$rootScope.full;
-    }
+    };
     $scope.removeItem = function (item) {
-        db.removeItem(item);
-    }
+        mdbrddb.removeItem(item);
+    };
 }

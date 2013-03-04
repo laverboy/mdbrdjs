@@ -26,7 +26,7 @@
                         <div data-shotid="{{ image.$$hashkey }}">
                             <img ng-src="{{ image.bigImageUrl }}" alt="{{ image.alt }}" width="400" height="300">
                             <div class="options">
-                                <a class="trash" ng-click="removeItem(image)"><i class="icon-trash"></i></a>
+                                <a class="trash" href="#" ng-click="removeItem(image)"><i class="icon-trash"></i></a>
                                 <a class="link" href="http://dribbble.com{{ image.href }}" target="_blank" ><i class="icon-info-sign"></i></a>
                             </div>
                         </div>
@@ -37,9 +37,10 @@
             <div id="searchView" ng-controller="searchCtrl">
     
                 <form ng-submit="startSearch()" method="post" action="" id="search" ng-class="{loading: loading}">
-                    <input ng-model="search" id="entrybox" type="text" placeholder="Start your search&hellip;">    
+                    <input ng-model="search" id="entrybox" type="text" placeholder="Start your search&hellip;">
+                    <i class="icon-asterisk icon-spin"></i>
                 </form>
-                <ul id="results">
+                <ul id="results" style="width: {{ shots.length * 400 }}px">
                     <li ng-repeat="page in shots">
                         <ul>
                             <li ng-repeat="thumb in page" class="shot" ng-class="{selected: isSelected(thumb)}">
