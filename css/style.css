@@ -107,12 +107,18 @@ form#search {
 #search.loading i { visibility: visible; }
 
 #results {
+    overflow: hidden;
+    position: relative;
+    min-height: 900px;
+}
+
+#results > ul {
 	width: 400px;
 	margin: 15px auto 0;
     position: absolute;
     right: 0;
 }
-#results > li {
+#results > ul > li {
     width: 360px;
     margin: 0 20px;
     float: left;

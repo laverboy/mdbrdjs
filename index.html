@@ -38,20 +38,30 @@
     
                 <form ng-submit="startSearch()" method="post" action="" id="search" ng-class="{loading: loading}">
                     <input ng-model="search" id="entrybox" type="text" placeholder="Start your search&hellip;">
-                    <i class="icon-asterisk icon-spin"></i>
+                    <i class="icon-spinner icon-spin"></i>
                 </form>
-                <ul id="results" style="width: {{ shots.length * 400 }}px">
-                    <li ng-repeat="page in shots">
-                        <ul>
-                            <li ng-repeat="thumb in page" class="shot" ng-class="{selected: isSelected(thumb)}">
-                                <a href="#" ng-click="toggleSelected(thumb, $event)">
-                                    <img ng-src="{{thumb.url}}" alt="{{thumb.alt}}">
-                                    <span></span>
-                                </a>
-                            </li>
-                        </ul>
-                    </li>
-                </ul>
+                <div id="results" class="cf">
+                    <ul style="width: {{ shots.length * 400 }}px">
+                        <li ng-repeat="page in shots">
+                            <ul>
+                                <li ng-repeat="thumb in page" class="shot" ng-class="{selected: isSelected(thumb)}">
+                                    <a href="#" ng-click="toggleSelected(thumb, $event)">
+                                        <img ng-src="{{thumb.url}}" alt="{{thumb.alt}}">
+                                        <span></span>
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
+                    </ul>
+                </div>
+                <div id="page-nos">
+                    <ul>
+                        <li ng-repeat="page in shots">
+                            <a>{{ $index }}</a>        
+                        </li>
+                    </ul>
+                    
+                </div>
 
             </div>
         </div>
