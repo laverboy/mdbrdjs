@@ -40,8 +40,16 @@
                     <input ng-model="search" id="entrybox" type="text" placeholder="Start your search&hellip;">
                     <i class="icon-spinner icon-spin"></i>
                 </form>
+                <div id="page-nos">
+                    <ul>
+                        <li ng-repeat="page in shots">
+                            <a href="#" ng-click="changePage($index, $event)">{{ $index + 1 }}</a>        
+                        </li>
+                    </ul>
+                    
+                </div>
                 <div id="results" class="cf">
-                    <ul style="width: {{ shots.length * 400 }}px">
+                    <ul style="width: {{ shots.length * 400 }}px; left: -{{ page * 400}}px;">
                         <li ng-repeat="page in shots">
                             <ul>
                                 <li ng-repeat="thumb in page" class="shot" ng-class="{selected: isSelected(thumb)}">
@@ -53,14 +61,6 @@
                             </ul>
                         </li>
                     </ul>
-                </div>
-                <div id="page-nos">
-                    <ul>
-                        <li ng-repeat="page in shots">
-                            <a>{{ $index }}</a>        
-                        </li>
-                    </ul>
-                    
                 </div>
 
             </div>

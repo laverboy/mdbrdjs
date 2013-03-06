@@ -34,6 +34,7 @@ function searchCtrl ($scope, $resource, mdbrddb) {
 
     $scope.shots = [];
     $scope.loading = false;
+    $scope.page = 0;
 
     $scope.dribbble = $resource('https://query.yahooapis.com/v1/public/yql',
             {q: '', format: 'json', callback:'JSON_CALLBACK'},
@@ -52,7 +53,7 @@ function searchCtrl ($scope, $resource, mdbrddb) {
             var shotsArray = _.map(data.query.results.div, function(num){
                 var newNum = {
                     'url' : 'http:' + num.div.noscript.img.src,
-                    'alt' : 'http:' + num.div.noscript.img.alt,
+                    'alt' : num.div.noscript.img.alt,
                     'href': num.a[0].href,
                     'id'  : num.a[0].href.substr(7).split("-")[0],
                     'selected' : false
@@ -61,6 +62,7 @@ function searchCtrl ($scope, $resource, mdbrddb) {
             });
             $scope.shots.push(shotsArray);
             $scope.loading = false;
+            $scope.page = $scope.shots.length - 1;
             console.log('shots: ', $scope.shots);
         });
     };
@@ -74,6 +76,11 @@ function searchCtrl ($scope, $resource, mdbrddb) {
     $scope.isSelected = function (item) {
         return mdbrddb.hasItem(item);
     };
+    
+    $scope.changePage = function (page, $event) {
+        $event.preventDefault();
+        $scope.page = page;
+    }
 }
 
 function mdbrdCtrl ($scope, mdbrddb, $rootScope) {

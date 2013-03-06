@@ -116,12 +116,23 @@ form#search {
 	width: 400px;
 	margin: 15px auto 0;
     position: absolute;
-    right: 0;
+    left: 0;
+    -webkit-transition: all .3s ease-in-out;
 }
 #results > ul > li {
     width: 360px;
     margin: 0 20px;
     float: left;
+}
+#page-nos ul {
+    color: rgb(245,245,245);
+    text-align: center;
+}
+#page-nos li {
+    display: inline;
+}
+#page-nos li a {
+    color: rgb(245,245,245);
 }
 .noresults {
 	text-align: center;
