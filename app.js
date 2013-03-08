@@ -1,6 +1,14 @@
 /*global angular, _ */
 
+// 5139f762e4b0ee7b4c2c069e
+
 var app = angular.module('mdbrd', ['ngResource']);
+
+app.config( function ($routeProvider) {
+    $routeProvider.
+        when('/:id', { controller: function($route) { console.log('controller'); } }).
+        otherwise({redirectTo: '/'});
+} );
 
 app.factory('Mongodb', function ($resource) {
     var mongolab = $resource('https://api.mongolab.com/api/1/databases' +
@@ -9,11 +17,11 @@ app.factory('Mongodb', function ($resource) {
             update: { method: 'PUT' }
         }
     );
-    
+
     return mongolab;
 });
 
-app.factory('mdbrddb', ['$http', 'Mongodb', function(http, Mongodb) {
+app.factory('mdbrddb', ['$http', 'Mongodb', '$location', function($http, Mongodb, $location) {
     var items = [];
     var mdbrddb = {
         addItem: function  (item) {
@@ -29,33 +37,30 @@ app.factory('mdbrddb', ['$http', 'Mongodb', function(http, Mongodb) {
             return ( _.find(items, function (i) { return i.id === item.id; }) ) ? true : false;
         },
         getBigImage: function (item) {
-            http.jsonp('http://api.dribbble.com/shots/' + item.id + '?callback=JSON_CALLBACK')
+            $http.jsonp('http://api.dribbble.com/shots/' + item.id + '?callback=JSON_CALLBACK')
             .success(function (response) {
                 item.bigImageUrl = response.image_url;
             });
         },
         save: function () {
-            console.log(angular.toJson(items));
-            
             // if no items yet just return
             if (items.length === 0) return false;
-            
+
             var json = angular.toJson(items);
-            
+
             Mongodb.save({"x" : json}, function (response) {
                 console.log(response._id.$oid);
+                $location.path('/' + response._id.$oid);
             });
         }
     };
-    
+
     return mdbrddb;
 }]);
 
-
-
 app.run( function($rootScope, mdbrddb) {
     $rootScope.full = false;
-    
+
 });
 
 function toolsCtrl ($scope, mdbrddb) {
@@ -75,7 +80,7 @@ function searchCtrl ($scope, $resource, mdbrddb) {
             {q: '', format: 'json', callback:'JSON_CALLBACK'},
             {get:{method: 'JSONP'}}
         );
-    
+
     var searchUrl = "select * from html where url='http://dribbble.com/search?q=",
         searchUrlEnd = "' and xpath='//div[@class=\"dribbble-img\"]'";
 
@@ -109,7 +114,7 @@ function searchCtrl ($scope, $resource, mdbrddb) {
     $scope.isSelected = function (item) {
         return mdbrddb.hasItem(item);
     };
-    
+
     $scope.changePage = function (page, $event) {
         $event.preventDefault();
         $scope.page = page;
@@ -117,7 +122,7 @@ function searchCtrl ($scope, $resource, mdbrddb) {
 }
 
 function mdbrdCtrl ($scope, mdbrddb, $rootScope) {
-    
+
     $scope.images = mdbrddb.getItems();
 
     $scope.toggleFullScreen = function () {
@@ -126,4 +131,8 @@ function mdbrdCtrl ($scope, mdbrddb, $rootScope) {
     $scope.removeItem = function (item) {
         mdbrddb.removeItem(item);
     };
+
+    // $scope.$on('$routeChangeSuccess', function () {
+    //     console.log($route.current);
+    // });
 }
