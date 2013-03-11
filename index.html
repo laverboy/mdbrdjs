@@ -6,13 +6,16 @@
         <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.0.5/angular.min.js"></script>
         <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.0.5/angular-resource.min.js"></script>
         <script src="includes/underscore-min.js"></script>
+        <script>
+          document.write('<base href="' + document.location + '" />');
+        </script>
         <script src="app.js"></script>
     </head>
     <body>
         <header class="wrap" ng-controller="toolsCtrl">
             <div id="tools">
                 <a id="save" href="#" ng-click="saveMdbrd($event)"><i class="icon-save"></i></a>
-                <a id="clear" href="#"><i class="icon-trash"></i></a>
+                <a id="clear" href="#" ng-click="clearMdbrd($event)"><i class="icon-trash"></i></a>
             </div>
             <h1>mdbrd</h1>
         </header>

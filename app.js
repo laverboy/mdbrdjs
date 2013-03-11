@@ -1,14 +1,10 @@
 /*global angular, _ */
 
-// 5139f762e4b0ee7b4c2c069e
-
 var app = angular.module('mdbrd', ['ngResource']);
 
-app.config( function ($routeProvider) {
-    $routeProvider.
-        when('/:id', { controller: function($route) { console.log('controller'); } }).
-        otherwise({redirectTo: '/'});
-} );
+app.config( ['$locationProvider', function($locationProvider) {
+    $locationProvider.html5Mode(true);
+} ] );
 
 app.factory('Mongodb', function ($resource) {
     var mongolab = $resource('https://api.mongolab.com/api/1/databases' +
@@ -25,7 +21,9 @@ app.factory('mdbrddb', ['$http', 'Mongodb', '$location', function($http, Mongodb
     var items = [];
     var mdbrddb = {
         addItem: function  (item) {
-            item.bigImageUrl = this.getBigImage(item);
+            if ( !_.has(item, "bigImageUrl")) {
+                item.bigImageUrl = this.getBigImage(item);
+            }
             items.push(item);
         },
         removeItem: function (item) { items.splice(items.indexOf(item), 1); },
@@ -33,6 +31,7 @@ app.factory('mdbrddb', ['$http', 'Mongodb', '$location', function($http, Mongodb
             ( this.hasItem(item) ) ? this.removeItem(item) : this.addItem(item);
         },
         getItems: function () { return items; },
+        clearItems: function () { items.length = 0; },
         hasItem: function (item) {
             return ( _.find(items, function (i) { return i.id === item.id; }) ) ? true : false;
         },
@@ -46,11 +45,8 @@ app.factory('mdbrddb', ['$http', 'Mongodb', '$location', function($http, Mongodb
             // if no items yet just return
             if (items.length === 0) return false;
 
-            var json = angular.toJson(items);
-
-            Mongodb.save({"x" : json}, function (response) {
-                console.log(response._id.$oid);
-                $location.path('/' + response._id.$oid);
+            Mongodb.save({"x" : angular.toJson(items)}, function (response) {
+                $location.hash(response._id.$oid);
             });
         }
     };
@@ -60,13 +56,34 @@ app.factory('mdbrddb', ['$http', 'Mongodb', '$location', function($http, Mongodb
 
 app.run( function($rootScope, mdbrddb) {
     $rootScope.full = false;
-
 });
 
-function toolsCtrl ($scope, mdbrddb) {
+function toolsCtrl ($scope, mdbrddb, $location, Mongodb, $rootScope) {
+    $scope.$watch(function(){ return $location.hash(); },
+      function(id){ $scope.id = id; }
+    );
+    $scope.$watch('id', function(id){
+      if(id){
+        // handle scenario when there's id available
+        mdbrddb.clearItems();
+        $rootScope.full = true;
+        Mongodb.get({id: id}, function (resp) {
+            var items = angular.fromJson(resp.x);
+            _.each(items, function (item) {
+                mdbrddb.addItem(item);
+            });
+        });
+        return;
+      }
+    });
     $scope.saveMdbrd = function ($event) {
         $event.preventDefault();
         mdbrddb.save();
+    };
+    $scope.clearMdbrd = function ($event) {
+        $event.preventDefault();
+        mdbrddb.clearItems();
+        $rootScope.full = false;
     };
 }
 
@@ -87,7 +104,7 @@ function searchCtrl ($scope, $resource, mdbrddb) {
     $scope.startSearch = function () {
         var newSearchUrl = searchUrl + encodeURIComponent($scope.search) + searchUrlEnd;
         $scope.loading = true;
-        $scope.dribbble.get({q: newSearchUrl}, function(data){
+        $scope.dribbble.get({q: newSearchUrl, diagnostics: true}, function(data){
             console.log('yql results: ', data);
             // handle 0 result
             var shotsArray = _.map(data.query.results.div, function(num){
@@ -132,7 +149,4 @@ function mdbrdCtrl ($scope, mdbrddb, $rootScope) {
         mdbrddb.removeItem(item);
     };
 
-    // $scope.$on('$routeChangeSuccess', function () {
-    //     console.log($route.current);
-    // });
 }
