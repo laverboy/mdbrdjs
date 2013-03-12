@@ -93,18 +93,15 @@ function searchCtrl ($scope, $resource, mdbrddb) {
     $scope.loading = false;
     $scope.page = 0;
 
-    $scope.dribbble = $resource('https://query.yahooapis.com/v1/public/yql',
-            {q: '', format: 'json', callback:'JSON_CALLBACK'},
+    $scope.dribbble = $resource('http://query.yahooapis.com/v1/public/yql/mattl/dribbble',
+            {query: '', format: 'json', callback:'JSON_CALLBACK'},
             {get:{method: 'JSONP'}}
         );
 
-    var searchUrl = "select * from html where url='http://dribbble.com/search?q=",
-        searchUrlEnd = "' and xpath='//div[@class=\"dribbble-img\"]'";
-
     $scope.startSearch = function () {
-        var newSearchUrl = searchUrl + encodeURIComponent($scope.search) + searchUrlEnd;
+        var newSearchUrl = "http://dribbble.com/search?q=" + encodeURIComponent($scope.search);
         $scope.loading = true;
-        $scope.dribbble.get({q: newSearchUrl, diagnostics: true}, function(data){
+        $scope.dribbble.get({query: newSearchUrl, diagnostics: true}, function(data){
             console.log('yql results: ', data);
             // handle 0 result
             var shotsArray = _.map(data.query.results.div, function(num){

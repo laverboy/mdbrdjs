@@ -55,7 +55,7 @@ a {text-decoration: none;}
     color: #242424;
 }
 
-span#x {
+#x {
 	right: 5px;
 	position: absolute;
 	top: 2px;
@@ -65,7 +65,7 @@ span#x {
 	text-align: center;
 	line-height: 20px;
 }
-span#full {
+#full {
 	position: absolute;
 	display: block;
 	padding: 5px;
@@ -78,7 +78,7 @@ span#full {
     top:0;
     left:-23px;
 }
-form#search {
+#search {
 	margin: 30px auto 0;
 	text-align: center;
 	padding-bottom: 15px;
@@ -118,6 +118,9 @@ form#search {
     position: absolute;
     left: 0;
     -webkit-transition: all .3s ease-in-out;
+    -moz-transition: all .3s ease-in-out;
+    -ms-transition: all .3s ease-in-out;
+    -o-transition: all .3s ease-in-out;
 }
 #results > ul > li {
     width: 360px;
@@ -144,7 +147,6 @@ form#search {
 	position: absolute;
 }
 .shot {
-	width:49.8113%; height:auto;
 	float:left;
 	list-style: none;
 	position: relative;
@@ -159,6 +161,7 @@ form#search {
 	top: 0; left: 0;
 	display: block;
 	width: 100%; height: 100%;
+    background: rgb(0,0,0);
 	background: rgba(0,0,0,0.8) url(../images/tick.png) no-repeat center center;
 }
 
@@ -191,6 +194,9 @@ form#search {
 	position: relative;
 	z-index: 1;
 	-webkit-transition: all 0.5s;
+    -moz-transition: all 0.5s;
+    -ms-transition: all 0.5s;
+    -o-transition: all 0.5s;
 }
 #mdbrdView::before {
 	content: "";
@@ -200,9 +206,11 @@ form#search {
 	left: -100%;
 	width: 100%;
 	height: 100%;
-	-webkit-box-shadow: inset -3px 0px 6px 0px rgba(0, 0, 0, 0.15);
-	-moz-box-shadow: inset -3px 0px 6px 0px rgba(0, 0, 0, 0.15);
-	box-shadow: inset -3px 0px 6px 0px rgba(0, 0, 0, 0.15);
+	-webkit-box-shadow: inset -3px 0 6px 0 rgba(0, 0, 0, 0.15);
+	-moz-box-shadow: inset -3px 0 6px 0 rgba(0, 0, 0, 0.15);
+    -ms-box-shadow: inset -3px 0 6px 0 rgba(0, 0, 0, 0.15);
+    -o-box-shadow: inset -3px 0 6px 0 rgba(0, 0, 0, 0.15);
+	box-shadow: inset -3px 0 6px 0 rgba(0, 0, 0, 0.15);
 }
 #mdbrdView .bigShots {
     height: 100%;
@@ -235,6 +243,9 @@ form#search {
 	border-bottom-left-radius: 5px;
 	margin-right: -41px;
 	-webkit-transition: all .3s;
+    -moz-transition: all .3s;
+    -ms-transition: all .3s;
+    -o-transition: all .3s;
 }
 .fullShot:hover .options {margin-right: 0;}
 
