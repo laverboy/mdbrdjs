@@ -26,14 +26,17 @@ app.factory('mdbrddb', ['$http', 'Mongodb', '$location', function($http, Mongodb
             }
             items.push(item);
         },
-        removeItem: function (item) { items.splice(items.indexOf(item), 1); },
+        removeItem: function (item) {
+            var found = _.findWhere(items, {id: item.id});
+            items.splice(items.indexOf(found), 1); 
+        },
         toggleItem: function (item) {
             ( this.hasItem(item) ) ? this.removeItem(item) : this.addItem(item);
         },
         getItems: function () { return items; },
         clearItems: function () { items.length = 0; },
         hasItem: function (item) {
-            return ( _.find(items, function (i) { return i.id === item.id; }) ) ? true : false;
+            return ( _.findWhere(items, {id: item.id}) ) ? true : false;
         },
         getBigImage: function (item) {
             $http.jsonp('http://api.dribbble.com/shots/' + item.id + '?callback=JSON_CALLBACK')
