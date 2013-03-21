@@ -1,4 +1,5 @@
 /*global angular, _ */
+'use strict';
 
 var app = angular.module('mdbrd', ['ngResource']);
 
@@ -96,31 +97,83 @@ function searchCtrl ($scope, $resource, mdbrddb) {
     $scope.loading = false;
     $scope.page = 0;
 
+    $scope.query = {
+        get url() { return "http://dribbble.com/search?page=" + this.page + "&q="},
+        page: 1,
+        hasNextPage: false,
+        nextPageArray: []
+    };
+
     $scope.dribbble = $resource('http://query.yahooapis.com/v1/public/yql/mattl/dribbble',
             {query: '', format: 'json', callback:'JSON_CALLBACK'},
             {get:{method: 'JSONP'}}
         );
 
     $scope.startSearch = function () {
-        var newSearchUrl = "http://dribbble.com/search?q=" + encodeURIComponent($scope.search);
+        $scope.query.page = 1;
+        var newSearchUrl = $scope.query.url + encodeURIComponent($scope.search);
         $scope.loading = true;
-        $scope.dribbble.get({query: newSearchUrl, diagnostics: true}, function(data){
-            console.log('yql results: ', data);
-            // handle 0 result
-            var shotsArray = _.map(data.query.results.div, function(num){
-                var newNum = {
-                    'url' : 'http:' + num.div.noscript.img.src,
-                    'alt' : num.div.noscript.img.alt,
-                    'href': num.a[0].href,
-                    'id'  : num.a[0].href.substr(7).split("-")[0]
-                };
-                return newNum;
-            });
-            $scope.shots.push(shotsArray);
-            $scope.loading = false;
-            $scope.page = $scope.shots.length - 1;
-            console.log('shots: ', $scope.shots);
-        });
+        $scope.dribbble.get({query: newSearchUrl, diagnostics: true}, 
+            // Success
+            function(data){
+                console.log('yql results: ', data);
+                if ( !data.query.count ) 
+                {
+                    $scope.loading = false;
+                    $scope.flash("No results for that search. I'm terribly sorry.");
+                    return false;
+                }
+                // handle 0 result
+                var shotsArray = _.map(data.query.results.div, function(num){
+                    var newNum = {
+                        'url' : 'http:' + num.div.noscript.img.src,
+                        'alt' : num.div.noscript.img.alt,
+                        'href': num.a[0].href,
+                        'id'  : num.a[0].href.substr(7).split("-")[0]
+                    };
+                    return newNum;
+                });
+                $scope.shots.push(shotsArray);
+                $scope.loading = false;
+                $scope.page = $scope.shots.length - 1;
+                
+                checkForNextPage();
+                console.log('shots: ', $scope.shots);
+            },
+            // Failure
+            function(){
+                $scope.loading = false;
+                $scope.flash("There seems to be some kind of problem with the search system. It's probably Yahoo messing us around again!");
+            }
+        );
+    };
+    
+    var checkForNextPage = function () {
+        $scope.query.page++;
+        var newSearchUrl = $scope.query.url + encodeURIComponent($scope.search);
+        $scope.dribbble.get({query: newSearchUrl, diagnostics: true}, 
+            // Success
+            function(data){
+                console.log('next page results: ', data);
+                if ( data.query.count ) 
+                {
+                    $scope.query.hasNextPage = true;
+                    $scope.nextPageArray = _.map(data.query.results.div, function(num){
+                    var newNum = {
+                            'url' : 'http:' + num.div.noscript.img.src,
+                            'alt' : num.div.noscript.img.alt,
+                            'href': num.a[0].href,
+                            'id'  : num.a[0].href.substr(7).split("-")[0]
+                        };
+                        return newNum;
+                    });
+                }
+                else
+                {
+                    $scope.query.hasNextPage = false;
+                }
+            }
+        );
     };
 
     $scope.toggleSelected = function (shot, $event) {
@@ -135,6 +188,10 @@ function searchCtrl ($scope, $resource, mdbrddb) {
     $scope.changePage = function (page, $event) {
         $event.preventDefault();
         $scope.page = page;
+    };
+    
+    $scope.flash = function (message) {
+        console.log(message);
     };
 }
 
