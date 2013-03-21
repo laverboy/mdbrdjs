@@ -48,14 +48,15 @@
             
             <div id="searchView" ng-controller="searchCtrl">
     
-                <form ng-submit="startSearch()" method="post" action="" id="search" ng-class="{loading: loading}">
+                <form ng-submit="startSearch()" method="post" action="" id="search">
                     <input ng-model="search" id="entrybox" type="text" placeholder="Start your search&hellip;">
-                    <i class="icon-spinner icon-spin"></i>
+                    <a class="more" href="#" ng-click="addNextPage()" ng-class="{show: query.hasNextPage}"><i class="icon-plus"></i></a>
+                    <i class="icon-spinner icon-spin" ng-class="{show: loading}"></i>
                 </form>
                 <div id="page-nos">
                     <ul>
                         <li ng-repeat="page in shots">
-                            <a href="#" ng-click="changePage($index, $event)">{{ $index + 1 }}</a>        
+                            <a href="#" ng-click="changePage($index, $event)">{{ $index + 1 }}</a>
                         </li>
                     </ul>
                     
@@ -74,8 +75,6 @@
                         </li>
                     </ul>
                 </div>
-                <a class="more" href="#" ng-click="addNextPage()" ng-show="query.hasNextPage"><i class="icon-plus"></i> Add</a>
-
             </div>
         </div>
         <footer class="wrap">

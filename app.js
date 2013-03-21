@@ -1,4 +1,5 @@
-/*global angular, _ */
+/*global angular, _, console */
+/*jshint globalstrict: true*/
 'use strict';
 
 var app = angular.module('mdbrd', ['ngResource']);
@@ -29,7 +30,7 @@ app.factory('mdbrddb', ['$http', 'Mongodb', '$location', function($http, Mongodb
         },
         removeItem: function (item) {
             var found = _.findWhere(items, {id: item.id});
-            items.splice(items.indexOf(found), 1); 
+            items.splice(items.indexOf(found), 1);
         },
         toggleItem: function (item) {
             ( this.hasItem(item) ) ? this.removeItem(item) : this.addItem(item);
@@ -98,7 +99,7 @@ function searchCtrl ($scope, $resource, mdbrddb) {
     $scope.page = 0;
 
     $scope.query = {
-        get url() { return "http://dribbble.com/search?page=" + this.page + "&q="},
+        get url() { return "http://dribbble.com/search?page=" + this.page + "&q="; },
         page: 1,
         hasNextPage: false,
         nextPageArray: []
@@ -111,13 +112,14 @@ function searchCtrl ($scope, $resource, mdbrddb) {
 
     $scope.startSearch = function () {
         $scope.query.page = 1;
+        $scope.query.hasNextPage = false;
         var newSearchUrl = $scope.query.url + encodeURIComponent($scope.search);
         $scope.loading = true;
-        $scope.dribbble.get({query: newSearchUrl, diagnostics: true}, 
+        $scope.dribbble.get({query: newSearchUrl, diagnostics: true},
             // Success
             function(data){
                 console.log('yql results: ', data);
-                if ( !data.query.count ) 
+                if ( !data.query.count )
                 {
                     $scope.loading = false;
                     $scope.flash("No results for that search. I'm terribly sorry.");
@@ -136,7 +138,7 @@ function searchCtrl ($scope, $resource, mdbrddb) {
                 $scope.shots.push(shotsArray);
                 $scope.loading = false;
                 $scope.page = $scope.shots.length - 1;
-                
+
                 checkForNextPage();
                 console.log('shots: ', $scope.shots);
             },
@@ -147,19 +149,18 @@ function searchCtrl ($scope, $resource, mdbrddb) {
             }
         );
     };
-    
+
     var checkForNextPage = function () {
         $scope.query.page++;
         var newSearchUrl = $scope.query.url + encodeURIComponent($scope.search);
-        $scope.dribbble.get({query: newSearchUrl, diagnostics: true}, 
+        $scope.dribbble.get({query: newSearchUrl, diagnostics: true},
             // Success
             function(data){
                 console.log('next page results: ', data);
-                if ( data.query.count ) 
+                if ( data.query.count )
                 {
-                    $scope.query.hasNextPage = true;
-                    $scope.nextPageArray = _.map(data.query.results.div, function(num){
-                    var newNum = {
+                    $scope.query.nextPageArray = _.map(data.query.results.div, function(num){
+                        var newNum = {
                             'url' : 'http:' + num.div.noscript.img.src,
                             'alt' : num.div.noscript.img.alt,
                             'href': num.a[0].href,
@@ -167,6 +168,7 @@ function searchCtrl ($scope, $resource, mdbrddb) {
                         };
                         return newNum;
                     });
+                    $scope.query.hasNextPage = true;
                 }
                 else
                 {
@@ -174,6 +176,14 @@ function searchCtrl ($scope, $resource, mdbrddb) {
                 }
             }
         );
+    };
+
+    $scope.addNextPage = function () {
+        $scope.shots.push($scope.query.nextPageArray);
+        $scope.query.nextPageArray = [];
+        $scope.query.hasNextPage = false;
+        $scope.page = $scope.shots.length - 1;
+        checkForNextPage();
     };
 
     $scope.toggleSelected = function (shot, $event) {
@@ -189,7 +199,7 @@ function searchCtrl ($scope, $resource, mdbrddb) {
         $event.preventDefault();
         $scope.page = page;
     };
-    
+
     $scope.flash = function (message) {
         console.log(message);
     };

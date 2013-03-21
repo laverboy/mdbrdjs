@@ -3,17 +3,17 @@
 @import url('font-awesome.css');
 
 body{
-	margin: 0 auto;
-	font-size:14px;
-	font-family: "Helvetica Neue", "Helvetica", Arial, sans-serif;
-	font-weight: 100;
+    margin: 0 auto;
+    font-size:14px;
+    font-family: "Helvetica Neue", "Helvetica", Arial, sans-serif;
+    font-weight: 100;
     background-color: #ebebeb;
 }
 h1 {
-	font-size: 1.2em;
-	font-family: "Proxima Nova";
-	font-weight: 400;
-	color: #212121;
+    font-size: 1.2em;
+    font-family: "Proxima Nova";
+    font-weight: 400;
+    color: #212121;
 }
 h2 {margin: 20px 0;}
 a {text-decoration: none;}
@@ -27,84 +27,92 @@ a {text-decoration: none;}
     background-color: white;
 }
 #footer {
-	clear: both;
+    clear: both;
 }
 
 /* !Search Page */
 #searchView {
-	width: 25%;
-	height: 100%;
-	margin: 0;
-	float: left;
-	position: relative;
+    width: 25%;
+    height: 100%;
+    margin: 0;
+    float: left;
+    position: relative;
     background-color: rgb(60,60,60);
     min-height:1045px;
-	z-index: 2;
-	-webkit-transition: all 0.5s;
+    z-index: 2;
+    -webkit-transition: all 0.5s;
 }
 .full #searchView {
     margin-left: -25%;
 }
 #tools {
-	float: right;
+    float: right;
 }
 #tools a {
-	margin: 0 5px ;
-	display: block;
-	float: left;
+    margin: 0 5px ;
+    display: block;
+    float: left;
     color: #242424;
 }
 
 #x {
-	right: 5px;
-	position: absolute;
-	top: 2px;
-	cursor: pointer;
-	width: 20px;
-	height: 20px;
-	text-align: center;
-	line-height: 20px;
+    right: 5px;
+    position: absolute;
+    top: 2px;
+    cursor: pointer;
+    width: 20px;
+    height: 20px;
+    text-align: center;
+    line-height: 20px;
 }
 #full {
-	position: absolute;
-	display: block;
-	padding: 5px;
-	z-index: 500;
-	margin: 5px;
-	cursor: pointer;
-	background-color: rgb(60,60,60);
-	color: white;
-	font-weight: bold;
+    position: absolute;
+    display: block;
+    padding: 5px;
+    z-index: 500;
+    margin: 5px;
+    cursor: pointer;
+    background-color: rgb(60,60,60);
+    color: white;
+    font-weight: bold;
     top:0;
     left:-23px;
 }
 #search {
-	margin: 30px auto 0;
-	text-align: center;
-	padding-bottom: 15px;
+    margin: 30px auto 0;
+    text-align: center;
+    padding-bottom: 15px;
 }
 
 #search input {
-	color: rgb(245,245,245);
-	font-size: 1.2em;
-	font-family: "Helvetica", Arial, sans-serif;
-	font-weight: 100;
+    color: rgb(245,245,245);
+    font-size: 1.2em;
+    font-family: "Helvetica", Arial, sans-serif;
+    font-weight: 100;
     background-color: rgb(60,60,60);
-	border: none;
-	height: 38px;
-	border-radius: 6px;
-	width: 69%;
-	padding-left: 6%;
+    border: none;
+    height: 38px;
+    border-radius: 6px;
+    width: 69%;
+    padding-left: 6%;
 }
 #search input:focus {
     outline: none;
 }
-#search i {
+.icon-spinner {
     color: rgb(245,245,245);
     margin-left:5px;
-    visibility: hidden;
+    opacity: 0;
+    -webkit-transition: opacity .2s ease-in-out;
 }
-#search.loading i { visibility: visible; }
+.more {
+    text-align: center;
+    color: rgb(245,245,245);
+    font-weight: bold;
+    opacity: 0;
+    -webkit-transition: opacity .2s ease-in-out;
+}
+.show { opacity: 1; }
 
 #results {
     overflow: hidden;
@@ -113,8 +121,8 @@ a {text-decoration: none;}
 }
 
 #results > ul {
-	width: 400px;
-	margin: 15px auto 0;
+    width: 400px;
+    margin: 15px auto 0;
     position: absolute;
     left: 0;
     -webkit-transition: all .3s ease-in-out;
@@ -138,82 +146,71 @@ a {text-decoration: none;}
     color: rgb(245,245,245);
 }
 .noresults {
-	text-align: center;
-	color: #d9d9d9;
-	margin-top: 20px;
-	font-weight: 300;
-	width:100%;
-	left:0;
-	position: absolute;
+    text-align: center;
+    color: #d9d9d9;
+    margin-top: 20px;
+    font-weight: 300;
+    width:100%;
+    left:0;
+    position: absolute;
 }
 .shot {
-	float:left;
-	list-style: none;
-	position: relative;
+    float:left;
+    list-style: none;
+    position: relative;
     width:179px;
     height:134px;
-	max-width:200px;
-	line-height:0;
+    max-width:200px;
+    line-height:0;
 }
 .shot img {width:100%;max-width:100%;}
 .shot.selected span {
-	position: absolute;
-	top: 0; left: 0;
-	display: block;
-	width: 100%; height: 100%;
+    position: absolute;
+    top: 0; left: 0;
+    display: block;
+    width: 100%; height: 100%;
     background: rgb(0,0,0);
-	background: rgba(0,0,0,0.8) url(../images/tick.png) no-repeat center center;
+    background: rgba(0,0,0,0.8) url(../images/tick.png) no-repeat center center;
 }
 
 #mdbrd, #currentMdbrd {
-	text-align: right;
-	margin: 30px 0 50px;
+    text-align: right;
+    margin: 30px 0 50px;
 }
 .mdbrdshot {
-	display: inline;
+    display: inline;
 }
 .mdbrdshot a {text-decoration: none;}
 .mdbrdshot a img {
-	width: 100px;
-}
-
-.more {
-	background: #ea4c89;
-    padding: 10px;
-    margin: 0 auto;
-    display: block;
-    width: 20%;
-    text-align: center;
-    color: #fff;
-    font-weight: bold;
+    width: 100px;
 }
 
 /* !View Page */
 
 #mdbrdView {
-	width: 75%;
-	float: right;
-	height:100%;
-	position: relative;
-	z-index: 1;
-	-webkit-transition: all 0.5s;
+    width: 75%;
+    float: right;
+    height:100%;
+    position: relative;
+    z-index: 1;
+    -webkit-transition: all 0.5s;
     -moz-transition: all 0.5s;
     -ms-transition: all 0.5s;
     -o-transition: all 0.5s;
 }
 #mdbrdView::before {
-	content: "";
-	position: absolute;
-	z-index: -1;
-	top: 0;
-	left: -100%;
-	width: 100%;
-	height: 100%;
-	-webkit-box-shadow: inset -3px 0 6px 0 rgba(0, 0, 0, 0.15);
-	-moz-box-shadow: inset -3px 0 6px 0 rgba(0, 0, 0, 0.15);
+    content: "";
+    position: absolute;
+    z-index: -1;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    -webkit-box-shadow: inset -3px 0 6px 0 rgba(0, 0, 0, 0.15);
+    -moz-box-shadow: inset -3px 0 6px 0 rgba(0, 0, 0, 0.15);
     -ms-box-shadow: inset -3px 0 6px 0 rgba(0, 0, 0, 0.15);
     -o-box-shadow: inset -3px 0 6px 0 rgba(0, 0, 0, 0.15);
-	box-shadow: inset -3px 0 6px 0 rgba(0, 0, 0, 0.15);
+    box-shadow: inset -3px 0 6px 0 rgba(0, 0, 0, 0.15);
 }
 #mdbrdView .bigShots {
     height: 100%;
@@ -222,30 +219,30 @@ a {text-decoration: none;}
     width: 100%;
 }
 .fullShot {
-	float: left;
-	width:400px;
-	height:300px;
-	background: url(../images/checker.gif) no-repeat center center;
-	position: relative;
-	overflow: hidden;
+    float: left;
+    width:400px;
+    height:300px;
+    background: url(../images/checker.gif) no-repeat center center;
+    position: relative;
+    overflow: hidden;
 }
 .fullShot a img {
-	margin: 0 auto ;
-	display: block;
-	width:100%;
-	max-width:100%;
-	height:auto;
+    margin: 0 auto ;
+    display: block;
+    width:100%;
+    max-width:100%;
+    height:auto;
 }
 .options {
     padding:5px;
-	background-color: rgb(60,60,60);
-	position: absolute;
-	top: 7px;
-	right: 0;
-	border-top-left-radius: 5px;
-	border-bottom-left-radius: 5px;
-	margin-right: -41px;
-	-webkit-transition: all .3s;
+    background-color: rgb(60,60,60);
+    position: absolute;
+    top: 7px;
+    right: 0;
+    border-top-left-radius: 5px;
+    border-bottom-left-radius: 5px;
+    margin-right: -41px;
+    -webkit-transition: all .3s;
     -moz-transition: all .3s;
     -ms-transition: all .3s;
     -o-transition: all .3s;
@@ -257,24 +254,24 @@ a {text-decoration: none;}
 
 /* !Toolbar */
 #toolbar {
-	height: 40px;
-	background-color: #353535;
-	top: 0;
-	z-index: 50;
-	width: 100%;
-	left: 0;
+    height: 40px;
+    background-color: #353535;
+    top: 0;
+    z-index: 50;
+    width: 100%;
+    left: 0;
 }
 #toolbar h1 {
-	font-size: 1.6em;
-	text-align: center;
-	line-height: 40px;
-	color: white;
-	margin: 0; padding: 0;
-	position: absolute;
-	width: 300px;
-	left: 50%;
-	margin-left: -150px;
-	font-weight: 200;
+    font-size: 1.6em;
+    text-align: center;
+    line-height: 40px;
+    color: white;
+    margin: 0; padding: 0;
+    position: absolute;
+    width: 300px;
+    left: 50%;
+    margin-left: -150px;
+    font-weight: 200;
 }
 #toolbar button {margin: 5px;}
 .left {float: left;}
@@ -283,7 +280,7 @@ a {text-decoration: none;}
 
 /* 4 = 1600, 1200,800 */
 @media screen and (max-width: 1599px) {
-	.wrap {width:1200px;}
+    .wrap {width:1200px;}
     #mdbrdView {width:66.66666666%}
     #searchView {width: 33.33333333%}
     .full #searchView {
