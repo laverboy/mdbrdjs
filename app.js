@@ -11,7 +11,7 @@ app.config( ['$locationProvider', function($locationProvider) {
 app.factory('Mongodb', function ($resource) {
     var mongolab = $resource('https://api.mongolab.com/api/1/databases' +
         '/moodboards/collections/mdbrds/:id',
-        { apiKey: 'dj1dHpCLgc0tT_9wzAE2d2670XleOZsX' }, {
+        { apiKey: 'dj1dHpCLgc0tT_9wzAE2d2670XleOZsX', fo: true }, {
             update: { method: 'PUT' }
         }
     );
@@ -22,6 +22,9 @@ app.factory('Mongodb', function ($resource) {
 app.factory('mdbrddb', ['$http', 'Mongodb', '$location', function($http, Mongodb, $location) {
     var items = [];
     var mdbrddb = {
+        generateUID: function () {
+            return ("00000" + (Math.random()*Math.pow(36,5) << 0).toString(36)).substr(-5);
+        },
         addItem: function  (item) {
             if ( !_.has(item, "bigImageUrl")) {
                 item.bigImageUrl = this.getBigImage(item);
@@ -49,9 +52,12 @@ app.factory('mdbrddb', ['$http', 'Mongodb', '$location', function($http, Mongodb
         save: function () {
             // if no items yet just return
             if (items.length === 0) return false;
-
-            Mongodb.save({"x" : angular.toJson(items)}, function (response) {
-                $location.hash(response._id.$oid);
+            Mongodb.save({
+                "x" : angular.toJson(items),
+                "xid" : this.generateUID()
+            }, function (response) {
+                console.log(response);
+                $location.hash(response.xid);
             });
         }
     };
@@ -63,16 +69,18 @@ app.run( function($rootScope, mdbrddb) {
     $rootScope.full = false;
 });
 
-function toolsCtrl ($scope, mdbrddb, $location, Mongodb, $rootScope) {
+function toolsCtrl ($scope, mdbrddb, $location, Mongodb, $rootScope) {    
     $scope.$watch(function(){ return $location.hash(); },
-      function(id){ $scope.id = id; }
+        function(id){ $scope.id = id; }
     );
     $scope.$watch('id', function(id){
       if(id){
         // handle scenario when there's id available
         mdbrddb.clearItems();
         $rootScope.full = true;
-        Mongodb.get({id: id}, function (resp) {
+        var s = JSON.stringify({'xid': id});
+        Mongodb.get({q: s}, function (resp) {
+            console.log(resp);
             var items = angular.fromJson(resp.x);
             _.each(items, function (item) {
                 mdbrddb.addItem(item);
