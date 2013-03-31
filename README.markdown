@@ -10,6 +10,12 @@ We hope you enjoy it (when it's finished)!
 
 ___
 
+Todo
+----
+
+[ ] - Drag to re-arrang
+[ ] - Flash/Warning/Message
+[ ] - Look nicer
 
 *Made by the guys at [messagecreative.com](http://www.messagecreative.com)*
 

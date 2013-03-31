@@ -11,14 +11,13 @@
 body{
     margin: 0 auto;
     font-size:14px;
-    font-family: "Helvetica Neue", "Helvetica", Arial, sans-serif;
+    font-family: 'Lato', sans-serif;
     font-weight: 100;
     background-color: #ebebeb;
 }
 h1 {
     font-size: 1.2em;
-    font-family: "Proxima Nova";
-    font-weight: 400;
+    font-weight: 700;
     color: #212121;
 }
 h2 {margin: 20px 0;}
@@ -86,7 +85,7 @@ a#tweet {
     margin: 0;
 }
 a#tweet.show {
-    width: 32px;
+    width: 40px;
 }
 
 #x {

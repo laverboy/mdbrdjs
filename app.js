@@ -104,7 +104,7 @@ function toolsCtrl ($scope, mdbrddb, $location, Mongodb, $rootScope) {
         $rootScope.full = false;
     };
     $scope.reload = function () {
-        document.location.reload(true);
+        document.location.href = window.location.protocol + "//" + window.location.host;
     };
     
     
