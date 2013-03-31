@@ -2,6 +2,12 @@
 @import url('buttons.css');
 @import url('font-awesome.css');
 
+@-webkit-keyframes fade {
+  0% {opacity: 1;}
+  50% {opacity: 0;}
+  100% {opacity: 1;}
+}
+
 body{
     margin: 0 auto;
     font-size:14px;
@@ -53,6 +59,34 @@ a {text-decoration: none;}
     display: block;
     float: left;
     color: #242424;
+}
+a.active span {
+    -webkit-animation: fade 1s linear .1s infinite;
+    -webkit-animation-fill-mode: both;
+}
+a.active span:nth-of-type(2) {
+  -webkit-animation-delay: 0.3s;
+}
+
+a.active span:nth-of-type(3) {
+  -webkit-animation-delay: 0.5s;
+}
+
+a.active span:nth-of-type(4) {
+  -webkit-animation-delay: 0.7s;
+}
+
+a#tweet {
+    width: 0;
+    overflow: hidden;
+    -webkit-transition: all .2s ease-out;
+    -moz-transition: all .2s ease-out;
+    -ms-transition: all .2s ease-out;
+    -o-transition: all .2s ease-out;
+    margin: 0;
+}
+a#tweet.show {
+    width: 32px;
 }
 
 #x {
@@ -234,22 +268,20 @@ a {text-decoration: none;}
     height:auto;
 }
 .options {
-    padding:5px;
+    padding:10px;
     background-color: rgb(60,60,60);
     position: absolute;
     top: 7px;
     right: 0;
-    border-top-left-radius: 5px;
-    border-bottom-left-radius: 5px;
-    margin-right: -41px;
+    margin-right: -63px;
     -webkit-transition: all .3s;
     -moz-transition: all .3s;
     -ms-transition: all .3s;
     -o-transition: all .3s;
 }
 .fullShot:hover .options {margin-right: 0;}
-
-.options a {color:#eee;}
+.options a {color:#ccc; margin: 0 4px;}
+.options a:hover {color:#fff;}
 
 
 /* !Toolbar */

@@ -19,7 +19,7 @@ app.factory('Mongodb', function ($resource) {
     return mongolab;
 });
 
-app.factory('mdbrddb', ['$http', 'Mongodb', '$location', function($http, Mongodb, $location) {
+app.factory('mdbrddb', ['$http', 'Mongodb', '$location', '$rootScope', function($http, Mongodb, $location, $rootScope) {
     var items = [];
     var mdbrddb = {
         generateUID: function () {
@@ -52,12 +52,14 @@ app.factory('mdbrddb', ['$http', 'Mongodb', '$location', function($http, Mongodb
         save: function () {
             // if no items yet just return
             if (items.length === 0) return false;
+            
+            $rootScope.active = true;
             Mongodb.save({
                 "x" : angular.toJson(items),
                 "xid" : this.generateUID()
             }, function (response) {
-                console.log(response);
                 $location.hash(response.xid);
+                $rootScope.active = false;
             });
         }
     };
@@ -67,9 +69,11 @@ app.factory('mdbrddb', ['$http', 'Mongodb', '$location', function($http, Mongodb
 
 app.run( function($rootScope, mdbrddb) {
     $rootScope.full = false;
+    $rootScope.active = false;
 });
 
-function toolsCtrl ($scope, mdbrddb, $location, Mongodb, $rootScope) {    
+function toolsCtrl ($scope, mdbrddb, $location, Mongodb, $rootScope) { 
+    $scope.hasid = false;
     $scope.$watch(function(){ return $location.hash(); },
         function(id){ $scope.id = id; }
     );
@@ -80,11 +84,12 @@ function toolsCtrl ($scope, mdbrddb, $location, Mongodb, $rootScope) {
         $rootScope.full = true;
         var s = JSON.stringify({'xid': id});
         Mongodb.get({q: s}, function (resp) {
-            console.log(resp);
             var items = angular.fromJson(resp.x);
             _.each(items, function (item) {
                 mdbrddb.addItem(item);
             });
+            $scope.tweettext = escape("Check out the mood board I made at http://mdbrd.net/#" + id);
+            $scope.hasid = true;
         });
         return;
       }
@@ -98,6 +103,11 @@ function toolsCtrl ($scope, mdbrddb, $location, Mongodb, $rootScope) {
         mdbrddb.clearItems();
         $rootScope.full = false;
     };
+    $scope.reload = function () {
+        document.location.reload(true);
+    };
+    
+    
 }
 
 function searchCtrl ($scope, $resource, mdbrddb) {

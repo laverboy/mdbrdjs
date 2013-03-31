@@ -6,6 +6,7 @@
         <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.0.5/angular.min.js"></script>
         <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.0.5/angular-resource.min.js"></script>
         <script src="includes/underscore-min.js"></script>
+        
         <script>
           document.write('<base href="' + document.location + '" />');
         </script>
@@ -24,8 +25,10 @@
     <body>
         <header class="wrap" ng-controller="toolsCtrl">
             <div id="tools">
-                <a id="save" href="#" ng-click="saveMdbrd($event)"><i class="icon-save"></i></a>
-                <a id="clear" href="#" ng-click="clearMdbrd($event)"><i class="icon-trash"></i></a>
+                <a id="save" href="#" ng-click="saveMdbrd($event)" ng-class="{active: active}"><span>s</span><span>a</span><span>v</span><span>e</span></a>
+                <a id="tweet" href="https://twitter.com/intent/tweet?text={{ tweettext }}" ng-class="{show: hasid}">tweet</a>
+                <a id="clear" href="#" ng-click="clearMdbrd($event)">clear</a>
+                <a id="new" href="" ng-click="reload()">new</a>
             </div>
             <h1>mdbrd</h1>
         </header>
@@ -80,6 +83,7 @@
         <footer class="wrap">
             <p>Made by <a href="http://twitter.com/mlaver">@mlaver</a> with the original concept and some serious awesomness from <a href="http://twitter.com/ogvidius">@ogvidius</a>.</p>
         </footer>
+    <script type="text/javascript" src="//platform.twitter.com/widgets.js"></script>
     </body>
     
 </html>
